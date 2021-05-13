@@ -90,7 +90,7 @@ class ParametrosController extends Controller
         $r = Auth::user()->roles_id;
           echo $se;
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://192.168.0.101:7557/devices/?query=%7B%22_deviceId._SerialNumber%22%3A%22".$se."%22%7D");
+        curl_setopt($ch, CURLOPT_URL, "http://192.168.0.101:7557/devices/?query=%7B%22InternetGatewayDevice.DeviceInfo.SerialNumber%22%3A%22".$se."%22%7D");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $output = curl_exec($ch);
         curl_close($ch);
