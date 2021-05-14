@@ -40,14 +40,14 @@ class ParametrosController extends Controller
         $id = str_replace("%","%25",$id);
         $se = $request->ser;
         $vp = $request->ipdhcp;
-        $ph = $request->ph;
+        $ssid = $request->ssid;
         $r = Auth::user()->roles_id;
         echo $se;
         echo $vp;
-        echo $ph;
-        $post = '{"name":"setParameterValues", "parameterValues":[["InternetGatewayDevice.LANDevice.1.LANHostConfigManagement.DHCPConditionalServingPool.2.VendorClassID", "'.$ph.'", "xsd:string"]]}';
+        echo $ssid;
+        $post = '{"name":"setParameterValues", "parameterValues":[["InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.SSID", "'.$ssid.'", "xsd:string"]]}';
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://192.168.0.102:7557/devices/".$id."/tasks?connection_request");
+        curl_setopt($ch, CURLOPT_URL, "http://172.21.22.136:7557/devices/".$id."/tasks?connection_request");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
         $output = curl_exec($ch);
@@ -57,7 +57,7 @@ class ParametrosController extends Controller
         $objpost = json_decode($output);
 
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://192.168.0.102:7557/devices/?query=%7B%22InternetGatewayDevice.DeviceInfo.SerialNumber%22%3A%22".$se."%22%7D");
+        curl_setopt($ch, CURLOPT_URL, "http://172.21.22.136:7557/devices/?query=%7B%22InternetGatewayDevice.DeviceInfo.SerialNumber%22%3A%22".$se."%22%7D");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $output = curl_exec($ch);
         curl_close($ch);
@@ -65,7 +65,7 @@ class ParametrosController extends Controller
         $r = substr($r,2);
         $obj = json_decode($output);
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://192.168.0.102:7557/devices/?query=%7B%22Device.DeviceInfo.SerialNumber%22%3A%22".$se."%22%7D");
+        curl_setopt($ch, CURLOPT_URL, "http://172.21.22.136:7557/devices/?query=%7B%22Device.DeviceInfo.SerialNumber%22%3A%22".$se."%22%7D");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $output = curl_exec($ch);
         curl_close($ch);
@@ -138,9 +138,10 @@ class ParametrosController extends Controller
         $r = Auth::user()->roles_id;
           echo $id;
 
+          /*
         $post = '{"name": "refreshObject", "objectName": "InternetGatewayDevice"}';
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://192.168.0.102:7557/devices/".$id."/tasks?timeout=3000&connection_request");
+        curl_setopt($ch, CURLOPT_URL, "http://172.21.22.136:7557/devices/".$id."/tasks?timeout=3000&connection_request");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
         $output = curl_exec($ch);
@@ -151,17 +152,17 @@ class ParametrosController extends Controller
 
         $post = '{"name": "refreshObject", "objectName": "Device"}';
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://192.168.0.102:7557/devices/".$id."/tasks?timeout=3000&connection_request");
+        curl_setopt($ch, CURLOPT_URL, "http://172.21.22.136:7557/devices/".$id."/tasks?timeout=3000&connection_request");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
         $output = curl_exec($ch);
         curl_close($ch);
         $r = substr($output,0,-2);
         $r = substr($r,2);
-        $objpost2 = json_decode($output);
+        $objpost2 = json_decode($output);*/
 
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://192.168.0.102:7557/devices/?query=%7B%22InternetGatewayDevice.DeviceInfo.SerialNumber%22%3A%22".$se."%22%7D");
+        curl_setopt($ch, CURLOPT_URL, "http://172.21.22.136:7557/devices/?query=%7B%22InternetGatewayDevice.DeviceInfo.SerialNumber%22%3A%22".$se."%22%7D");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $output = curl_exec($ch);
         curl_close($ch);
@@ -169,7 +170,7 @@ class ParametrosController extends Controller
         $r = substr($r,2);
         $obj = json_decode($output);
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://192.168.0.102:7557/devices/?query=%7B%22Device.DeviceInfo.SerialNumber%22%3A%22".$se."%22%7D");
+        curl_setopt($ch, CURLOPT_URL, "http://172.21.22.136:7557/devices/?query=%7B%22Device.DeviceInfo.SerialNumber%22%3A%22".$se."%22%7D");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $output = curl_exec($ch);
         curl_close($ch);
@@ -197,9 +198,9 @@ class ParametrosController extends Controller
         $r = Auth::user()->roles_id;
         echo $id;
 
-        $post = '{"name": "refreshObject", "objectName": "InternetGatewayDevice"}';
+        /*$post = '{"name": "refreshObject", "objectName": "InternetGatewayDevice"}';
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://192.168.0.102:7557/devices/".$id."/tasks?timeout=3000&connection_request");
+        curl_setopt($ch, CURLOPT_URL, "http://172.21.22.136:7557/devices/".$id."/tasks?timeout=3000&connection_request");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
         $output = curl_exec($ch);
@@ -210,17 +211,17 @@ class ParametrosController extends Controller
 
         $post = '{"name": "refreshObject", "objectName": "Device"}';
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://192.168.0.102:7557/devices/".$id."/tasks?timeout=3000&connection_request");
+        curl_setopt($ch, CURLOPT_URL, "http://172.21.22.136:7557/devices/".$id."/tasks?timeout=3000&connection_request");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
         $output = curl_exec($ch);
         curl_close($ch);
         $r = substr($output,0,-2);
         $r = substr($r,2);
-        $objpost2 = json_decode($output);
+        $objpost2 = json_decode($output);*/
 
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://192.168.0.102:7557/devices/?query=%7B%22InternetGatewayDevice.DeviceInfo.SerialNumber%22%3A%22".$se."%22%7D");
+        curl_setopt($ch, CURLOPT_URL, "http://172.21.22.136:7557/devices/?query=%7B%22InternetGatewayDevice.DeviceInfo.SerialNumber%22%3A%22".$se."%22%7D");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $output = curl_exec($ch);
         curl_close($ch);
@@ -228,7 +229,7 @@ class ParametrosController extends Controller
         $r = substr($r,2);
         $obj = json_decode($output);
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://192.168.0.102:7557/devices/?query=%7B%22Device.DeviceInfo.SerialNumber%22%3A%22".$se."%22%7D");
+        curl_setopt($ch, CURLOPT_URL, "http://172.21.22.136:7557/devices/?query=%7B%22Device.DeviceInfo.SerialNumber%22%3A%22".$se."%22%7D");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $output = curl_exec($ch);
         curl_close($ch);

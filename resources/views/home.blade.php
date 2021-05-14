@@ -65,14 +65,14 @@
                             <td>
                                 <form action='{{ route('reinicio') }}' method='POST' role='form'>
                                     {{ csrf_field() }}
-                                    <input type='hidden' id='id' name='id' value='{{ $obj[0]->_id }}'>
+                                    <input type='hidden' id='id' name='id' value='{{ $obj[$i]->_id }}'>
                                     <button type='submit' class='btn btn-outline-primary'>Reiniciar CPE</button>
                                 </form>
                             </td>
                                 <td>
                                     <form action='{{ route('factoryreset') }}' method='POST' role='form'>
                                         {{ csrf_field() }}
-                                        <input type='hidden' id='id' name='id' value='{{ $obj[0]->_id }}'>
+                                        <input type='hidden' id='id' name='id' value='{{ $obj[$i]->_id }}'>
                                         <button type='submit' class='btn btn-outline-primary'>Reseteo de Fabrica</button>
                                     </form>
                                 </td>
@@ -101,8 +101,20 @@
                                 ?>
                                 <tr>
                                 <td>{{ $obj[$i]->_deviceId->_SerialNumber }}</td>
-                                <td>Item 2</td>
-                                <td>$2</td>
+                                <td>
+                                    <select name="ctto" id="ctto">
+                                    @for ($ii = 0; $ii < $co; $ii++)
+                                            <option value="{{ $ctto[$ii] }}">{{ $ctto[$ii] }}</option>
+                                    @endfor
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="telf" id="telf">
+                                        @for ($ii = 0; $ii < $co; $ii++)
+                                            <option value="{{ $telf[$ii] }}">{{ $telf[$ii] }}</option>
+                                        @endfor
+                                    </select>
+                                </td>
                                 <td>
                                     <form action='{{ route('verpar') }}' method='POST' role='form'>
                                         {{ csrf_field() }}

@@ -17,7 +17,7 @@ class ReinicioController extends Controller
         echo $id;
         $post = '{ "name": "reboot" }';
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://192.168.0.102:7557/devices/".$id."/tasks?timeout=3000&connection_request");
+        curl_setopt($ch, CURLOPT_URL, "http://172.21.22.136:7557/devices/".$id."/tasks?timeout=3000&connection_request");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
         $output = curl_exec($ch);
@@ -26,8 +26,10 @@ class ReinicioController extends Controller
         $r = substr($r,2);
         $objpost = json_decode($output);
 
+        $id = Auth::user()->roles_id;
+        echo $id;
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://192.168.0.102:7557/devices/");
+        curl_setopt($ch, CURLOPT_URL, "http://172.21.22.136:7557/devices/");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $output = curl_exec($ch);
         curl_close($ch);
@@ -47,7 +49,7 @@ class ReinicioController extends Controller
         echo $id;
         $post = '{"name": "factoryReset"}';
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://192.168.0.102:7557/devices/".$id."/tasks?timeout=3000&connection_request");
+        curl_setopt($ch, CURLOPT_URL, "http://172.21.22.136:7557/devices/".$id."/tasks?timeout=3000&connection_request");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
         $output = curl_exec($ch);
@@ -56,8 +58,10 @@ class ReinicioController extends Controller
         $r = substr($r,2);
         $objpost = json_decode($output);
 
+        $id = Auth::user()->roles_id;
+        echo $id;
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://192.168.0.102:7557/devices/");
+        curl_setopt($ch, CURLOPT_URL, "http://172.21.22.136:7557/devices/");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $output = curl_exec($ch);
         curl_close($ch);
