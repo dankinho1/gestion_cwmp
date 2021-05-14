@@ -24,8 +24,17 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $r = Auth::user()->roles_id;
-        echo $r;
-        return view('home', ['id' => $r]);
+        $id = Auth::user()->roles_id;
+        echo $id;
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "http://192.168.0.102:7557/devices/");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $output = curl_exec($ch);
+        curl_close($ch);
+        $r = substr($output,0,-2);
+        $r = substr($r,2);
+        $obj = json_decode($output);
+        $l = count($obj);
+        return view('home', ['id' => $id, 'obj' => $obj, 'l' => $l]);
     }
 }

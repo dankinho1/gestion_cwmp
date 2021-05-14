@@ -27,6 +27,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/vercpe', 'App\Http\Controllers\VerController@index')->name('vercpe');
 Route::post('/verpar', 'App\Http\Controllers\ParametrosController@verpar')->name('verpar');
 Route::post('/modpar', 'App\Http\Controllers\ParametrosController@modpar')->name('modpar');
+Route::post('/rein', 'App\Http\Controllers\ReinicioController@reinicio')->name('reinicio');
+Route::post('/refa', 'App\Http\Controllers\ReinicioController@factoryreset')->name('factoryreset');
 
 Route::resource('admin/users', 'App\Http\Controllers\AdminUsersController');
 Route::resource('parametros', 'App\Http\Controllers\ParametrosController');

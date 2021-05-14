@@ -13,7 +13,16 @@
     Clase: {{ $obj[0]->InternetGatewayDevice->DeviceInfo->ProductClass->_value }}<br>
     Tiempo desde el ultimo reinicio: {{ $obj[0]->InternetGatewayDevice->DeviceInfo->UpTime->_value }} s<br>
     <br>
-    Red WAN: {{ $obj[0]->InternetGatewayDevice->WANDevice->{3}->WANConnectionDevice->{1}->WANIPConnection->{1}->AddressingType->_value }}<br>
-    Estado: @if($obj[0]->InternetGatewayDevice->WANDevice->{3}->WANConnectionDevice->{1}->WANIPConnection->{1}->ConnectionStatus->_value=='Connected') Conectado
+    Red WAN: {{ $obj[0]->InternetGatewayDevice->WANDevice->{1}->WANConnectionDevice->{1}->WANIPConnection->{1}->AddressingType->_value }}<br>
+    Estado: @if($obj[0]->InternetGatewayDevice->WANDevice->{1}->WANConnectionDevice->{1}->WANIPConnection->{1}->ConnectionStatus->_value=='Connected') Conectado
     @endif<br>
+    <br>
+    <form action='{{ route('parametros.store') }}' method='POST' role='form'>
+        {{ csrf_field() }}
+        SSID: <input type="text" id="ssid" name="ssid" value="{{ $obj[0]->InternetGatewayDevice->LANDevice->{1}->WLANConfiguration->{1}->SSID->_value }}"><br>
+        Phone: <input type="text" id="ph" name="ph" value="{{ $obj[0]->InternetGatewayDevice->LANDevice->{1}->LANHostConfigManagement->DHCPConditionalServingPool->{2}->VendorClassID->_value }}"><br>
+        <input type='hidden' id='ser' name='ser' value='{{ $obj[0]->_deviceId->_SerialNumber }}'>
+        <input type='hidden' id='id' name='id' value='{{ $obj[0]->_id }}'>
+        <button type='submit' class='btn btn-outline-primary'>Cambiar</button>
+    </form>
 @endsection

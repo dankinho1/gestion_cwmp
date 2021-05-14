@@ -17,7 +17,7 @@ class VerController extends Controller
         $r = Auth::user()->roles_id;
         echo $r;
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://172.21.22.136:7557/devices/");
+        curl_setopt($ch, CURLOPT_URL, "http://192.168.0.102:7557/devices/");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $output = curl_exec($ch);
         curl_close($ch);
