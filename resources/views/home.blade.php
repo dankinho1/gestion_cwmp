@@ -46,7 +46,7 @@
                         <div id="dom-target">
                             <?php
                             $ch = curl_init();
-                            curl_setopt($ch, CURLOPT_URL, "http://192.168.0.101:7557/devices/");
+                            curl_setopt($ch, CURLOPT_URL, "http://172.21.22.136:7557/devices/");
                             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
                             $output = curl_exec($ch);
                             curl_close($ch);

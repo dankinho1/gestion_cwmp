@@ -36,6 +36,48 @@ class ParametrosController extends Controller
     public function store(Request $request)
     {
         //
+        $se = $request->ser;
+        $vp = $request->ipdhcp;
+        $r = Auth::user()->roles_id;
+        echo $se;
+        echo $vp;
+        $post = '{"name":"setParameterValues", "parameterValues":[["Device.DHCPv4.Server.Pool.4.IPRouters", "'.$vp.'", "xsd:string"]]}';
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "http://localhost:7557/devices/E48D8C-hAP%2520mini-7CCB08ADDAA1/tasks?connection_request");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+        $output = curl_exec($ch);
+        curl_close($ch);
+        $r = substr($output,0,-2);
+        $r = substr($r,2);
+        $objpost = json_decode($output);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "http://172.21.22.136:7557/devices/?query=%7B%22InternetGatewayDevice.DeviceInfo.SerialNumber%22%3A%22".$se."%22%7D");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $output = curl_exec($ch);
+        curl_close($ch);
+        $r = substr($output,0,-2);
+        $r = substr($r,2);
+        $obj = json_decode($output);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "http://172.21.22.136:7557/devices/?query=%7B%22Device.DeviceInfo.SerialNumber%22%3A%22".$se."%22%7D");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $output = curl_exec($ch);
+        curl_close($ch);
+        $obj2 = json_decode($output);
+        $l = count($obj);
+        $l2 = count($obj2);
+        //print_r($obj);
+        print_r($objpost);
+        /*if(!$obj) {
+            echo "OBJ2 EX";
+            return view('cpe.tr143mod', ['id' => $r, 'obj' => $obj2, 'l' => $l2]);
+        }
+        if(!$obj2) {
+            echo "OBJ1 EX";
+            return view('cpe.tr098mod', ['id' => $r, 'obj' => $obj, 'l' => $l]);
+        }*/
     }
 
     /**
@@ -90,16 +132,64 @@ class ParametrosController extends Controller
         $r = Auth::user()->roles_id;
           echo $se;
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://192.168.0.101:7557/devices/?query=%7B%22InternetGatewayDevice.DeviceInfo.SerialNumber%22%3A%22".$se."%22%7D");
+        curl_setopt($ch, CURLOPT_URL, "http://172.21.22.136:7557/devices/?query=%7B%22InternetGatewayDevice.DeviceInfo.SerialNumber%22%3A%22".$se."%22%7D");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $output = curl_exec($ch);
         curl_close($ch);
         $r = substr($output,0,-2);
         $r = substr($r,2);
         $obj = json_decode($output);
-        //print_r($obj);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "http://172.21.22.136:7557/devices/?query=%7B%22Device.DeviceInfo.SerialNumber%22%3A%22".$se."%22%7D");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $output = curl_exec($ch);
+        curl_close($ch);
+        $obj2 = json_decode($output);
         $l = count($obj);
-        //    echo "<br>".$obj[0]->InternetGatewayDevice->DeviceInfo->ModelName->_value;
-         return view('cpe.par', ['id' => $r, 'obj' => $obj, 'l' => $l]);
+        $l2 = count($obj2);
+        //print_r($obj);
+        //print_r($obj2);
+        if(!$obj) {
+            echo "OBJ2 EX";
+            return view('cpe.tr143', ['id' => $r, 'obj' => $obj2, 'l' => $l2]);
+        }
+        if(!$obj2) {
+            echo "OBJ1 EX";
+            return view('cpe.tr098', ['id' => $r, 'obj' => $obj, 'l' => $l]);
+        }
+    }
+
+    public function modpar(Request $request)
+    {
+        //
+        $se = $request->ser;
+        $r = Auth::user()->roles_id;
+        echo $se;
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "http://172.21.22.136:7557/devices/?query=%7B%22InternetGatewayDevice.DeviceInfo.SerialNumber%22%3A%22".$se."%22%7D");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $output = curl_exec($ch);
+        curl_close($ch);
+        $r = substr($output,0,-2);
+        $r = substr($r,2);
+        $obj = json_decode($output);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "http://172.21.22.136:7557/devices/?query=%7B%22Device.DeviceInfo.SerialNumber%22%3A%22".$se."%22%7D");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $output = curl_exec($ch);
+        curl_close($ch);
+        $obj2 = json_decode($output);
+        $l = count($obj);
+        $l2 = count($obj2);
+        //print_r($obj);
+        //print_r($obj2);
+        if(!$obj) {
+            echo "OBJ2 EX";
+            return view('cpe.tr143mod', ['id' => $r, 'obj' => $obj2, 'l' => $l2]);
+        }
+        if(!$obj2) {
+            echo "OBJ1 EX";
+            return view('cpe.tr098mod', ['id' => $r, 'obj' => $obj, 'l' => $l]);
+        }
     }
 }

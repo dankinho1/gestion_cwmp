@@ -26,7 +26,7 @@ Route::get('/reg', function () {
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/vercpe', 'App\Http\Controllers\VerController@index')->name('vercpe');
 Route::post('/verpar', 'App\Http\Controllers\ParametrosController@verpar')->name('verpar');
-Route::get('/modpar', 'App\Http\Controllers\ParametrosController@modpar')->name('modpar');
+Route::post('/modpar', 'App\Http\Controllers\ParametrosController@modpar')->name('modpar');
 
 Route::resource('admin/users', 'App\Http\Controllers\AdminUsersController');
 Route::resource('parametros', 'App\Http\Controllers\ParametrosController');
