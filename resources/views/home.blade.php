@@ -9,7 +9,7 @@
             <div class="card">
                 <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" id="cpe-tab" data-toggle="tab" href="#cpe" role="tab" aria-controls="cpe" aria-selected="true">Buscar CPE</a>
+                        <a class="nav-link active" id="cpe-tab" data-toggle="tab" href="#cpe" role="tab" aria-controls="cpe" aria-selected="true">Parametros CPE</a>
                     </li>
                     @if($id=="1"||$id=="5")
                     <li class="nav-item">
@@ -36,7 +36,7 @@
                     <div class="tab-pane fade show active" id="cpe" role="tabpanel" aria-labelledby="cpe-tab">
                         <br><br>
                         <a type="button" href="{{ route('vercpe') }}" class="btn btn-outline-primary">Ver lista de CPE</a>
-                        <a type="button" href="{{ route('reg') }}" class="btn btn-outline-primary">Buscar CPE</a><br>
+                        <a type="button" href="{{ route('buscpe') }}" class="btn btn-outline-primary">Buscar CPE</a><br>
                     </div>
                     @if($id!="2")
                     <div class="tab-pane fade" id="estadistica" role="tabpanel" aria-labelledby="estadistica-tab">
@@ -76,7 +76,14 @@
                                         <button type='submit' class='btn btn-outline-primary'>Reseteo de Fabrica</button>
                                     </form>
                                 </td>
-                            <td><button type="button" class="btn btn-outline-primary">Actualizar CPE</button></td>
+                            <td>
+                                <form action='{{ route('archivo') }}' method='POST' role='form'>
+                                    {{ csrf_field() }}
+                                    <input type='hidden' id='idd' name='idd' value='{{ $obj[$i]->_id }}'>
+                                    <input type='hidden' id='class' name='class' value='{{ $obj[$i]->_deviceId->_ProductClass }}'>
+                                    <button type="submit" class="btn btn-outline-primary">Actualizar CPE</button>
+                                </form>
+                            </td>
                             </tr>
                             <?php
                         }
@@ -100,34 +107,45 @@
                             for ($i=0; $i<$l; $i++) {
                                 ?>
                                 <tr>
+                                    <form action='{{ route('regcpe.store') }}' method='POST' role='form'>
+                                        {{ csrf_field() }}
                                 <td>{{ $obj[$i]->_deviceId->_SerialNumber }}</td>
                                 <td>
                                     <select name="ctto" id="ctto">
-                                 <!--   {{-- @for ( $ii = 0; $ii < $co; $ii++) --}}
-                                            <option value="{{-- $ctto[$ii] --}}">{{-- $ctto[$ii] --}}</option>
-                                   {{-- @endfor  --}} -->
+                                     @for ( $ii = 0; $ii < $co; $ii++)
+                                            <option value="{{ $ctto[$ii] }}">{{ $ctto[$ii] }}</option>
+                                    @endfor
                                     </select>
                                 </td>
                                 <td>
                                     <select name="telf" id="telf">
-                                   <!--    {{-- @for ($ii = 0; $ii < $co; $ii++) --}}
-                                            <option value="{{-- $telf[$ii] --}}">{{-- $telf[$ii] --}}</option>
-                                      {{--  @endfor --}} -->
+                                        @for ($ii = 0; $ii < $co; $ii++)
+                                            <option value="{{ $telf[$ii] }}">{{ $telf[$ii] }}</option>
+                                        @endfor
                                     </select>
                                 </td>
                                 <td>
-                                    <form action='{{ route('verpar') }}' method='POST' role='form'>
-                                        {{ csrf_field() }}
                                         <input type='hidden' id='ser' name='ser' value='{{ $obj[$i]->_deviceId->_SerialNumber }}'>
                                         <button type='submit' class='btn btn-outline-primary'>Registrar CPE</button>
-                                    </form>
                                 </td>
+                                    </form>
                                 </tr>
                             <?php
                             }
                             ?>
                             </tbody>
                         </table>
+                        <br><br>
+                        <form action='{{ route('regcpe.index') }}' role='form'>
+                            {{ csrf_field() }}
+                            <button type='submit' class='btn btn-outline-primary'>Editar CPEs</button>
+                        </form>
+
+                        <form action='{{ route('regcpe.index') }}' role='form'>
+                            {{ csrf_field() }}
+                            <button type='submit' class='btn btn-outline-primary'>Eliminar CPEs</button>
+                        </form>
+                        <br>
                     </div>
                     <div class="tab-pane fade" id="registrarusu" role="tabpanel" aria-labelledby="registrarusu-tab">
                         jklj<br>

@@ -25,6 +25,11 @@ Route::get('/reg', function () {
 })->name('reg');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/vercpe', 'App\Http\Controllers\VerController@index')->name('vercpe');
+Route::get('/buscpe', 'App\Http\Controllers\VerController@buscar')->name('buscpe');
+Route::post('/archivo', 'App\Http\Controllers\ArchivosController@index')->name('archivo');
+Route::post('/actu', 'App\Http\Controllers\ArchivosController@actu')->name('actu');
+Route::post('/borraractu', 'App\Http\Controllers\ArchivosController@borraractu')->name('borraractu');
+Route::post('/rescpe', 'App\Http\Controllers\VerController@rescpe')->name('rescpe');
 Route::post('/verpar', 'App\Http\Controllers\ParametrosController@verpar')->name('verpar');
 Route::post('/modpar', 'App\Http\Controllers\ParametrosController@modpar')->name('modpar');
 Route::post('/rein', 'App\Http\Controllers\ReinicioController@reinicio')->name('reinicio');
@@ -32,4 +37,5 @@ Route::post('/refa', 'App\Http\Controllers\ReinicioController@factoryreset')->na
 
 Route::resource('admin/users', 'App\Http\Controllers\AdminUsersController');
 Route::resource('parametros', 'App\Http\Controllers\ParametrosController');
+Route::resource('regcpe', 'App\Http\Controllers\CpeController');
 

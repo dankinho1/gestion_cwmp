@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class ModemCPE extends Model
 {
     use HasFactory;
+
+    protected $table = 'cpes';
 }
