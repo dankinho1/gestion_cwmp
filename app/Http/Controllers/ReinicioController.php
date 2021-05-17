@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ReinicioController extends Controller
 {
+    public $mainip = '192.168.0.101';
     //
     public function reinicio(Request $request)
     {
@@ -17,7 +18,7 @@ class ReinicioController extends Controller
         echo $id;
         $post = '{ "name": "reboot" }';
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://172.21.22.136:7557/devices/".$id."/tasks?timeout=3000&connection_request");
+        curl_setopt($ch, CURLOPT_URL, "http://".$this->mainip.":7557/devices/".$id."/tasks?timeout=3000&connection_request");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
         $output = curl_exec($ch);
@@ -29,7 +30,7 @@ class ReinicioController extends Controller
         $id = Auth::user()->roles_id;
         echo $id;
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://172.21.22.136:7557/devices/");
+        curl_setopt($ch, CURLOPT_URL, "http://".$this->mainip.":7557/devices/");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $output = curl_exec($ch);
         curl_close($ch);
@@ -49,7 +50,7 @@ class ReinicioController extends Controller
         echo $id;
         $post = '{"name": "factoryReset"}';
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://172.21.22.136:7557/devices/".$id."/tasks?timeout=3000&connection_request");
+        curl_setopt($ch, CURLOPT_URL, "http://".$this->mainip.":7557/devices/".$id."/tasks?timeout=3000&connection_request");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
         $output = curl_exec($ch);
@@ -61,7 +62,7 @@ class ReinicioController extends Controller
         $id = Auth::user()->roles_id;
         echo $id;
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://172.21.22.136:7557/devices/");
+        curl_setopt($ch, CURLOPT_URL, "http://".$this->mainip.":7557/devices/");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $output = curl_exec($ch);
         curl_close($ch);

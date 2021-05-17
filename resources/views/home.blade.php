@@ -103,16 +103,16 @@
                                 <td>{{ $obj[$i]->_deviceId->_SerialNumber }}</td>
                                 <td>
                                     <select name="ctto" id="ctto">
-                                    @for ($ii = 0; $ii < $co; $ii++)
-                                            <option value="{{ $ctto[$ii] }}">{{ $ctto[$ii] }}</option>
-                                    @endfor
+                                 <!--   {{-- @for ( $ii = 0; $ii < $co; $ii++) --}}
+                                            <option value="{{-- $ctto[$ii] --}}">{{-- $ctto[$ii] --}}</option>
+                                   {{-- @endfor  --}} -->
                                     </select>
                                 </td>
                                 <td>
                                     <select name="telf" id="telf">
-                                        @for ($ii = 0; $ii < $co; $ii++)
-                                            <option value="{{ $telf[$ii] }}">{{ $telf[$ii] }}</option>
-                                        @endfor
+                                   <!--    {{-- @for ($ii = 0; $ii < $co; $ii++) --}}
+                                            <option value="{{-- $telf[$ii] --}}">{{-- $telf[$ii] --}}</option>
+                                      {{--  @endfor --}} -->
                                     </select>
                                 </td>
                                 <td>

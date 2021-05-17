@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 
 class VerController extends Controller
 {
+    public $mainip = '192.168.0.101';
+
     public function __construct()
     {
 
@@ -17,7 +19,7 @@ class VerController extends Controller
         $r = Auth::user()->roles_id;
         echo $r;
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://172.21.22.136:7557/devices/");
+        curl_setopt($ch, CURLOPT_URL, "http://".$this->mainip.":7557/devices/");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $output = curl_exec($ch);
         curl_close($ch);
@@ -28,5 +30,10 @@ class VerController extends Controller
         $l = count($obj);
         //    echo "<br>".$obj->InternetGatewayDevice->DeviceInfo->ModelName->_value;
         return view('cpe.ver', ['id' => $r, 'obj' => $obj, 'l' => $l]);
+    }
+
+    public function buscar(Request $request)
+    {
+
     }
 }
