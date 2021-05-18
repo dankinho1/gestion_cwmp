@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class AdminUsersController extends Controller
 {
@@ -15,7 +17,7 @@ class AdminUsersController extends Controller
     {
         //
 
-        return view('admin.users.index');
+        return view('admin.users.register');
     }
 
     /**
@@ -37,6 +39,17 @@ class AdminUsersController extends Controller
     public function store(Request $request)
     {
         //
+        $name = $request->name;
+        $password = Hash::make($request->password);
+        $email = $request->email;
+
+        $newu = new User();
+        $newu->name = $name;
+        $newu->email = $email;
+        $newu->password = $password;
+        $newu->save();
+
+        return redirect()->route('home');
     }
 
     /**
@@ -59,6 +72,8 @@ class AdminUsersController extends Controller
     public function edit($id)
     {
         //
+        $user = User::find($id);
+        return view('admin.users.edit', ['user' => $user]);
     }
 
     /**
@@ -71,6 +86,13 @@ class AdminUsersController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return redirect()->route('home');
     }
 
     /**
@@ -82,5 +104,8 @@ class AdminUsersController extends Controller
     public function destroy($id)
     {
         //
+        User::destroy($id);
+
+        return redirect()->route('home');
     }
 }

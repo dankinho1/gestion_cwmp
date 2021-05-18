@@ -8,7 +8,7 @@ use App\Models\ModemCPE;
 
 class VerController extends Controller
 {
-    public $mainip = '172.21.22.136';
+    public $mainip = '192.168.0.101';
 
     public function __construct()
     {

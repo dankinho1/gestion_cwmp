@@ -57,11 +57,13 @@
                             <tbody>
                         <?php
                         for ($i=0; $i<$l; $i++) {
+                        for ($j=0; $j<$lmod; $j++) {
+                            if($obj[$i]->_deviceId->_SerialNumber==$mod[$j]->serial){
                             ?>
                             <tr>
                             <td>{{ $obj[$i]->_deviceId->_SerialNumber }}</td>
-                            <td>Item 2</td>
-                            <td>$2</td>
+                            <td>{{ $mod[$j]->contrato }}</td>
+                            <td>{{ $mod[$j]->telefono }}</td>
                             <td>
                                 <form action='{{ route('reinicio') }}' method='POST' role='form'>
                                     {{ csrf_field() }}
@@ -86,6 +88,8 @@
                             </td>
                             </tr>
                             <?php
+                                }
+                            }
                         }
                         ?>
                             </tbody>
@@ -105,6 +109,16 @@
                             <tbody>
                             <?php
                             for ($i=0; $i<$l; $i++) {
+                                $v1[$i]=$obj[$i]->_deviceId->_SerialNumber;
+                            }
+                            for ($j=0; $j<$lmod; $j++) {
+                                $v2[$j]=$mod[$j]->serial;
+                            }
+                            $dif = array_diff($v1, $v2);
+                            $difl = count($dif);
+                            foreach ($dif as $diff) {
+                            for ($i=0; $i<$l; $i++) {
+                            if($diff==$obj[$i]->_deviceId->_SerialNumber){
                                 ?>
                                 <tr>
                                     <form action='{{ route('regcpe.store') }}' method='POST' role='form'>
@@ -112,16 +126,16 @@
                                 <td>{{ $obj[$i]->_deviceId->_SerialNumber }}</td>
                                 <td>
                                     <select name="ctto" id="ctto">
-                                     @for ( $ii = 0; $ii < $co; $ii++)
-                                            <option value="{{ $ctto[$ii] }}">{{ $ctto[$ii] }}</option>
-                                    @endfor
+                                   {{--  @for ( $ii = 0; $ii < $co; $ii++) --}}
+                                            <option value="{{-- $ctto[$ii] --}}8">{{-- $ctto[$ii] --}}8</option>
+                                  {{--  @endfor --}}
                                     </select>
                                 </td>
                                 <td>
                                     <select name="telf" id="telf">
-                                        @for ($ii = 0; $ii < $co; $ii++)
-                                            <option value="{{ $telf[$ii] }}">{{ $telf[$ii] }}</option>
-                                        @endfor
+                                    {{--    @for ($ii = 0; $ii < $co; $ii++)  --}}
+                                            <option value="{{-- $telf[$ii] --}}8">{{-- $telf[$ii] --}}8</option>
+                                     {{--   @endfor --}}
                                     </select>
                                 </td>
                                 <td>
@@ -131,25 +145,69 @@
                                     </form>
                                 </tr>
                             <?php
+                                }
+                            }
                             }
                             ?>
                             </tbody>
                         </table>
                         <br><br>
-                        <form action='{{ route('regcpe.index') }}' role='form'>
+                        <form action='{{ route('listed') }}' role='form'>
                             {{ csrf_field() }}
                             <button type='submit' class='btn btn-outline-primary'>Editar CPEs</button>
                         </form>
 
-                        <form action='{{ route('regcpe.index') }}' role='form'>
+                        <form action='{{ route('listdes') }}' role='form'>
                             {{ csrf_field() }}
                             <button type='submit' class='btn btn-outline-primary'>Eliminar CPEs</button>
                         </form>
                         <br>
                     </div>
                     <div class="tab-pane fade" id="registrarusu" role="tabpanel" aria-labelledby="registrarusu-tab">
-                        jklj<br>
-                        <a class="nav-link" href="{{ route('reg') }}">{{ __('Registrar Nuevo Usuario') }}</a>
+                        <table data-toggle="table">
+                            <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Correo</th>
+                                <th>Nivel de Usuario</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php
+                            for ($i=0; $i<$lusu; $i++) {
+                                if(isset($usu[$i]->id)){
+                            ?>
+                            <tr>
+                                <td>{{ $usu[$i]->name }}</td>
+                                <td>{{ $usu[$i]->email }}</td>
+                                <td>{{ $usu[$i]->roles->name }}</td>
+                                <td>
+                                    <form action='{{ route('users.edit',$usu[$i]->id) }}' method='GET' role='form'>
+                                        {{ csrf_field() }}
+                                        <input type='hidden' id='id' name='id' value='{{ $usu[$i]->id }}'>
+                                        <button type='submit' class='btn btn-outline-primary'>Editar</button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form onsubmit="return confirm('Do you really want to submit the form?');" action='{{ route('users.destroy',$usu[$i]->id) }}' method='POST' role='form'>
+                                        {{ csrf_field() }}
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type='hidden' id='idd' name='idd' value='{{ $obj[$i]->_id }}'>
+                                        <input type='hidden' id='class' name='class' value='{{ $obj[$i]->_deviceId->_ProductClass }}'>
+                                        <button type="submit" class="btn btn-outline-primary">Eliminar</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <?php
+                            }
+                            }
+                            ?>
+                            </tbody>
+                        </table>
+                        <br><br>
+                        <a type="button" href="{{ route('users.index') }}" class="btn btn-outline-primary">Registrar Nuevo Usuario</a>
                     </div>
                 </div>
             </div>

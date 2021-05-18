@@ -39,3 +39,5 @@ Route::resource('admin/users', 'App\Http\Controllers\AdminUsersController');
 Route::resource('parametros', 'App\Http\Controllers\ParametrosController');
 Route::resource('regcpe', 'App\Http\Controllers\CpeController');
 
+Route::get('/listed', 'App\Http\Controllers\CpeController@listed')->name('listed');
+Route::get('/listdes', 'App\Http\Controllers\CpeController@listdes')->name('listdes');

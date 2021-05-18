@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\Models\ModemCPE;
 use Illuminate\Support\Facades\Auth;
 
 class CpeController extends Controller
 {
-    public $mainip = '172.21.22.136';
+    public $mainip = '192.168.0.101';
     /**
      * Display a listing of the resource.
      *
@@ -82,6 +83,13 @@ class CpeController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $cpe = ModemCPE::find($id);
+        $cpe->serial = $request->ser;
+        $cpe->contrato = $request->ctto;
+        $cpe->telefono = $request->telf;
+        $cpe->save();
+
+        return redirect()->route('home');
     }
 
     /**
@@ -93,5 +101,56 @@ class CpeController extends Controller
     public function destroy($id)
     {
         //
+        ModemCPE::destroy($id);
+
+        return redirect()->route('home');
+    }
+
+    public function listed()
+    {
+        $i=0;
+        /*$link = mysqli_connect( "172.21.22.136", "norah3","Norah123", "sistemas" )or( "Error :" . mysqli_error( $link ) );
+
+        $lia1=mysqli_query($link,"SELECT * FROM activos_cttos");
+        while ( $reg1 = mysqli_fetch_array( $lia1 ) ) {
+            $ctto[$i] = $reg1[ 'ctto_adsl' ];
+            $telf[$i] = $reg1[ 'telf' ];
+            $i++;
+        }
+        $co = count($ctto);
+        echo $co;*/
+
+        $id = Auth::user()->roles_id;
+        echo $id;
+        $modemcpe = new ModemCPE();
+        $u = ModemCPE::all();
+        $l = count($u);
+        echo $l;
+
+        return view('cpe.listed', ['id' => $id, /*'ctto' => $ctto, 'telf' => $telf, 'co' => $co, */'obj' => $u, 'l' => $l]);
+    }
+
+    public function listdes()
+    {
+        $i=0;
+        /*$link = mysqli_connect( "172.21.22.136", "norah3","Norah123", "sistemas" )or( "Error :" . mysqli_error( $link ) );
+
+        $lia1=mysqli_query($link,"SELECT * FROM activos_cttos");
+        while ( $reg1 = mysqli_fetch_array( $lia1 ) ) {
+            $ctto[$i] = $reg1[ 'ctto_adsl' ];
+            $telf[$i] = $reg1[ 'telf' ];
+            $i++;
+        }
+        $co = count($ctto);
+        echo $co;*/
+
+        $id = Auth::user()->roles_id;
+        echo $id;
+        $modemcpe = new ModemCPE();
+        $u = ModemCPE::all();
+        $l = count($u);
+        echo $l;
+
+        return view('cpe.listdes', ['id' => $id, /*'ctto' => $ctto, 'telf' => $telf, 'co' => $co, */'obj' => $u, 'l' => $l]);
     }
 }
