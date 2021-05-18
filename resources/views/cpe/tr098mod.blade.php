@@ -13,9 +13,15 @@
     Clase: {{ $obj[0]->InternetGatewayDevice->DeviceInfo->ProductClass->_value }}<br>
     Tiempo desde el ultimo reinicio: {{ $obj[0]->InternetGatewayDevice->DeviceInfo->UpTime->_value }} s<br>
     <br>
-    Red WAN: {{ $obj[0]->InternetGatewayDevice->WANDevice->{1}->WANConnectionDevice->{1}->WANIPConnection->{1}->AddressingType->_value }}<br>
-    Estado: @if($obj[0]->InternetGatewayDevice->WANDevice->{1}->WANConnectionDevice->{1}->WANIPConnection->{1}->ConnectionStatus->_value=='Connected') Conectado
+    <?php
+    for($i=0; $i<$eel;$i++) {
+    ?>
+    Red WAN: {{ $obj[0]->InternetGatewayDevice->WANDevice->{$ee[$i]}->WANConnectionDevice->{$ee2[$i]}->WANIPConnection->{1}->AddressingType->_value }}<br>
+    Estado: @if($obj[0]->InternetGatewayDevice->WANDevice->{$ee[$i]}->WANConnectionDevice->{$ee2[$i]}->WANIPConnection->{1}->ConnectionStatus->_value=='Connected') Conectado
     @endif<br>
+    <?php
+    }
+    ?>
     <br>
     <form action='{{ route('parametros.store') }}' method='POST' role='form'>
         {{ csrf_field() }}

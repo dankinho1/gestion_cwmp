@@ -20,14 +20,10 @@
                 {{ csrf_field() }}
                 <input type="hidden" name="_method" value="DELETE">
                 <td>{{ $obj[$i]->serial }}</td>
-                <td>{{--  @for ( $ii = 0; $ii < $co; $ii++) --}}
-                        {{-- $ctto[$ii] --}}9
-                        {{--  @endfor --}}
+                <td>  {{ $obj[$i]->contrato }}
                 </td>
                 <td>
-                        {{--    @for ($ii = 0; $ii < $co; $ii++)  --}}
-                        {{-- $telf[$ii] --}}9
-                        {{--   @endfor --}}
+                        {{ $obj[$i]->telefono }}
                 </td>
                 <td>
                     <input type='hidden' id='ser' name='ser' value='{{ $obj[$i]->serial }}'>

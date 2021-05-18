@@ -22,16 +22,16 @@
             <td>{{ $obj[$i]->serial }}</td>
             <td>
                 <select name="ctto" id="ctto">
-                    {{--  @for ( $ii = 0; $ii < $co; $ii++) --}}
-                    <option value="{{-- $ctto[$ii] --}}9">{{-- $ctto[$ii] --}}9</option>
-                    {{--  @endfor --}}
+                      @for ( $ii = 0; $ii < $co; $ii++)
+                    <option value="{{ $ctto[$ii] }}">{{ $ctto[$ii] }}</option>
+                      @endfor
                 </select>
             </td>
             <td>
                 <select name="telf" id="telf">
-                    {{--    @for ($ii = 0; $ii < $co; $ii++)  --}}
-                    <option value="{{-- $telf[$ii] --}}9">{{-- $telf[$ii] --}}9</option>
-                    {{--   @endfor --}}
+                        @for ($ii = 0; $ii < $co; $ii++)
+                    <option value="{{ $telf[$ii] }}">{{ $telf[$ii] }}</option>
+                       @endfor
                 </select>
             </td>
             <td>

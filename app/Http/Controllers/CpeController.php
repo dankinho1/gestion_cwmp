@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class CpeController extends Controller
 {
-    public $mainip = '192.168.0.101';
+    public $mainip = '172.21.22.136';
     /**
      * Display a listing of the resource.
      *
@@ -109,7 +109,7 @@ class CpeController extends Controller
     public function listed()
     {
         $i=0;
-        /*$link = mysqli_connect( "172.21.22.136", "norah3","Norah123", "sistemas" )or( "Error :" . mysqli_error( $link ) );
+        $link = mysqli_connect( "172.21.22.136", "norah3","Norah123", "sistemas" )or( "Error :" . mysqli_error( $link ) );
 
         $lia1=mysqli_query($link,"SELECT * FROM activos_cttos");
         while ( $reg1 = mysqli_fetch_array( $lia1 ) ) {
@@ -118,7 +118,7 @@ class CpeController extends Controller
             $i++;
         }
         $co = count($ctto);
-        echo $co;*/
+        echo $co;
 
         $id = Auth::user()->roles_id;
         echo $id;
@@ -127,23 +127,11 @@ class CpeController extends Controller
         $l = count($u);
         echo $l;
 
-        return view('cpe.listed', ['id' => $id, /*'ctto' => $ctto, 'telf' => $telf, 'co' => $co, */'obj' => $u, 'l' => $l]);
+        return view('cpe.listed', ['id' => $id, 'ctto' => $ctto, 'telf' => $telf, 'co' => $co, 'obj' => $u, 'l' => $l]);
     }
 
     public function listdes()
     {
-        $i=0;
-        /*$link = mysqli_connect( "172.21.22.136", "norah3","Norah123", "sistemas" )or( "Error :" . mysqli_error( $link ) );
-
-        $lia1=mysqli_query($link,"SELECT * FROM activos_cttos");
-        while ( $reg1 = mysqli_fetch_array( $lia1 ) ) {
-            $ctto[$i] = $reg1[ 'ctto_adsl' ];
-            $telf[$i] = $reg1[ 'telf' ];
-            $i++;
-        }
-        $co = count($ctto);
-        echo $co;*/
-
         $id = Auth::user()->roles_id;
         echo $id;
         $modemcpe = new ModemCPE();
@@ -151,6 +139,6 @@ class CpeController extends Controller
         $l = count($u);
         echo $l;
 
-        return view('cpe.listdes', ['id' => $id, /*'ctto' => $ctto, 'telf' => $telf, 'co' => $co, */'obj' => $u, 'l' => $l]);
+        return view('cpe.listdes', ['id' => $id, 'obj' => $u, 'l' => $l]);
     }
 }

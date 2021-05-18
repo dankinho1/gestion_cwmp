@@ -27,6 +27,9 @@
                     </li>
                     @endif
                     @if($id=="1")
+                        <li class="nav-item">
+                            <a class="nav-link" id="aprov-tab" data-toggle="tab" href="#aprov" role="tab" aria-controls="aprov" aria-selected="false">Autoprovision</a>
+                        </li>
                     <li class="nav-item">
                         <a class="nav-link" id="registrarusu-tab" data-toggle="tab" href="#registrarusu" role="tab" aria-controls="registrarusu" aria-selected="false">Registro de Usuarios</a>
                     </li>
@@ -126,16 +129,16 @@
                                 <td>{{ $obj[$i]->_deviceId->_SerialNumber }}</td>
                                 <td>
                                     <select name="ctto" id="ctto">
-                                   {{--  @for ( $ii = 0; $ii < $co; $ii++) --}}
-                                            <option value="{{-- $ctto[$ii] --}}8">{{-- $ctto[$ii] --}}8</option>
-                                  {{--  @endfor --}}
+                                     @for ( $ii = 0; $ii < $co; $ii++)
+                                            <option value="{{ $ctto[$ii] }}">{{ $ctto[$ii] }}</option>
+                                    @endfor
                                     </select>
                                 </td>
                                 <td>
                                     <select name="telf" id="telf">
-                                    {{--    @for ($ii = 0; $ii < $co; $ii++)  --}}
-                                            <option value="{{-- $telf[$ii] --}}8">{{-- $telf[$ii] --}}8</option>
-                                     {{--   @endfor --}}
+                                        @for ($ii = 0; $ii < $co; $ii++)
+                                            <option value="{{ $telf[$ii] }}">{{ $telf[$ii] }}</option>
+                                        @endfor
                                     </select>
                                 </td>
                                 <td>
@@ -162,6 +165,11 @@
                             <button type='submit' class='btn btn-outline-primary'>Eliminar CPEs</button>
                         </form>
                         <br>
+                    </div>
+                    <div class="tab-pane fade" id="aprov" role="tabpanel" aria-labelledby="aprov-tab">
+                        <br><br>
+                        <a type="button" href="{{ route('cregla') }}" class="btn btn-outline-primary">Crear Regla</a>
+                        <a type="button" href="{{ route('aregla') }}" class="btn btn-outline-primary">Asignar Regla</a><br>
                     </div>
                     <div class="tab-pane fade" id="registrarusu" role="tabpanel" aria-labelledby="registrarusu-tab">
                         <table data-toggle="table">

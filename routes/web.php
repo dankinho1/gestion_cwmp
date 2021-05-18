@@ -41,3 +41,6 @@ Route::resource('regcpe', 'App\Http\Controllers\CpeController');
 
 Route::get('/listed', 'App\Http\Controllers\CpeController@listed')->name('listed');
 Route::get('/listdes', 'App\Http\Controllers\CpeController@listdes')->name('listdes');
+
+Route::get('/cregla', 'App\Http\Controllers\ReglaController@cregla')->name('cregla');
+Route::get('/aregla', 'App\Http\Controllers\ReglaController@aregla')->name('aregla');

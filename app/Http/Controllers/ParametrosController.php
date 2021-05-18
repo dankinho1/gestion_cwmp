@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ParametrosController extends Controller
 {
-    public $mainip = '192.168.0.101';
+    public $mainip = '172.21.22.136';
     /**
      * Display a listing of the resource.
      *
@@ -57,32 +57,7 @@ class ParametrosController extends Controller
         $r = substr($r,2);
         $objpost = json_decode($output);
 
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://".$this->mainip.":7557/devices/?query=%7B%22InternetGatewayDevice.DeviceInfo.SerialNumber%22%3A%22".$se."%22%7D");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        $output = curl_exec($ch);
-        curl_close($ch);
-        $r = substr($output,0,-2);
-        $r = substr($r,2);
-        $obj = json_decode($output);
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://".$this->mainip.":7557/devices/?query=%7B%22Device.DeviceInfo.SerialNumber%22%3A%22".$se."%22%7D");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        $output = curl_exec($ch);
-        curl_close($ch);
-        $obj2 = json_decode($output);
-        $l = count($obj);
-        $l2 = count($obj2);
-        //print_r($obj);
-        //print_r($objpost);
-        if(!$obj) {
-            echo "OBJ2 EX";
-            return view('cpe.tr143mod', ['id' => $r, 'obj' => $obj2, 'l' => $l2]);
-        }
-        if(!$obj2) {
-            echo "OBJ1 EX";
-            return view('cpe.tr098mod', ['id' => $r, 'obj' => $obj, 'l' => $l]);
-        }
+        return redirect()->route('home');
     }
 
     /**
@@ -137,7 +112,6 @@ class ParametrosController extends Controller
         $id = str_replace("%","%25",$id);
         $se = $request->ser;
         $r = Auth::user()->roles_id;
-          echo $id;
 
           /*
         $post = '{"name": "refreshObject", "objectName": "InternetGatewayDevice"}';
@@ -178,15 +152,33 @@ class ParametrosController extends Controller
         $obj2 = json_decode($output);
         $l = count($obj);
         $l2 = count($obj2);
-        //print_r($obj);
+        echo $l;
+        //print_r($obj[0]->InternetGatewayDevice->WANDevice->{1}->WANConnectionDevice->{1});
         //print_r($obj2);
+        $o=0;
+        $oo=0;
+        $oo2=0;
+        while($o<$l) {
+        for ($ii=1; $ii<=10; $ii++) {
+        for ($jj=1; $jj<=10; $jj++) {
+        if(isset($obj[$o]->InternetGatewayDevice->WANDevice->{$ii}->WANConnectionDevice->{$jj})){
+            $ee[$oo]=$ii;
+            $ee2[$oo2]=$jj;
+        $oo2++;
+        $oo++;
+        }
+        }
+        }
+            $o++;
+        }
+        $eel=count($ee);
         if(!$obj) {
             echo "OBJ2 EX";
             return view('cpe.tr143', ['id' => $r, 'obj' => $obj2, 'l' => $l2]);
         }
         if(!$obj2) {
             echo "OBJ1 EX";
-            return view('cpe.tr098', ['id' => $r, 'obj' => $obj, 'l' => $l]);
+            return view('cpe.tr098', ['id' => $r, 'obj' => $obj, 'l' => $l, 'ee' => $ee, 'ee2' => $ee2, 'eel' => $eel]);
         }
     }
 
@@ -239,13 +231,30 @@ class ParametrosController extends Controller
         $l2 = count($obj2);
         //print_r($obj);
         //print_r($obj2);
+        $o=0;
+        $oo=0;
+        $oo2=0;
+        while($o<$l) {
+            for ($ii=1; $ii<=10; $ii++) {
+                for ($jj=1; $jj<=10; $jj++) {
+                    if(isset($obj[$o]->InternetGatewayDevice->WANDevice->{$ii}->WANConnectionDevice->{$jj})){
+                        $ee[$oo]=$ii;
+                        $ee2[$oo2]=$jj;
+                        $oo2++;
+                        $oo++;
+                    }
+                }
+            }
+            $o++;
+        }
+        $eel=count($ee);
         if(!$obj) {
             echo "OBJ2 EX";
             return view('cpe.tr143mod', ['id' => $r, 'obj' => $obj2, 'l' => $l2]);
         }
         if(!$obj2) {
             echo "OBJ1 EX";
-            return view('cpe.tr098mod', ['id' => $r, 'obj' => $obj, 'l' => $l]);
+            return view('cpe.tr098mod', ['id' => $r, 'obj' => $obj, 'l' => $l, 'ee' => $ee, 'ee2' => $ee2, 'eel' => $eel]);
         }
     }
 }
