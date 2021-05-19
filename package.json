@@ -26,6 +26,7 @@
     },
     "dependencies": {
         "bootstrap-table": "^1.18.3",
+        "chart.js": "^3.2.1",
         "laravel-bootstrap-table": "0.0.5"
     }
 }

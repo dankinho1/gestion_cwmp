@@ -38,9 +38,13 @@ Route::post('/refa', 'App\Http\Controllers\ReinicioController@factoryreset')->na
 Route::resource('admin/users', 'App\Http\Controllers\AdminUsersController');
 Route::resource('parametros', 'App\Http\Controllers\ParametrosController');
 Route::resource('regcpe', 'App\Http\Controllers\CpeController');
+Route::resource('regla', 'App\Http\Controllers\ReglaController');
 
 Route::get('/listed', 'App\Http\Controllers\CpeController@listed')->name('listed');
 Route::get('/listdes', 'App\Http\Controllers\CpeController@listdes')->name('listdes');
 
 Route::get('/cregla', 'App\Http\Controllers\ReglaController@cregla')->name('cregla');
 Route::get('/aregla', 'App\Http\Controllers\ReglaController@aregla')->name('aregla');
+Route::post('/store2', 'App\Http\Controllers\ReglaController@store2')->name('store2');
+
+Route::get('/charts', 'App\Http\Controllers\ChartController@index')->name('charts');

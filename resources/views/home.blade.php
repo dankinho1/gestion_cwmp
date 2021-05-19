@@ -43,7 +43,7 @@
                     </div>
                     @if($id!="2")
                     <div class="tab-pane fade" id="estadistica" role="tabpanel" aria-labelledby="estadistica-tab">
-                        trurrfg
+                        <a type="button" href="{{ route('charts') }}" class="btn btn-outline-primary">CPEs activos e inactivos</a>
                     </div>
                     @endif
                     <div class="tab-pane fade" id="gestion" role="tabpanel" aria-labelledby="gestion-tab">
@@ -129,16 +129,16 @@
                                 <td>{{ $obj[$i]->_deviceId->_SerialNumber }}</td>
                                 <td>
                                     <select name="ctto" id="ctto">
-                                     @for ( $ii = 0; $ii < $co; $ii++)
-                                            <option value="{{ $ctto[$ii] }}">{{ $ctto[$ii] }}</option>
-                                    @endfor
+                                   {{--  @for ( $ii = 0; $ii < $co; $ii++) --}}
+                                            <option value="{{-- $ctto[$ii] --}}8">{{-- $ctto[$ii] --}}8</option>
+                                {{--    @endfor --}}
                                     </select>
                                 </td>
                                 <td>
                                     <select name="telf" id="telf">
-                                        @for ($ii = 0; $ii < $co; $ii++)
-                                            <option value="{{ $telf[$ii] }}">{{ $telf[$ii] }}</option>
-                                        @endfor
+                                    {{--    @for ($ii = 0; $ii < $co; $ii++) --}}
+                                            <option value="{{-- $telf[$ii] --}}8">{{-- $telf[$ii] --}}8</option>
+                                     {{--   @endfor --}}
                                     </select>
                                 </td>
                                 <td>

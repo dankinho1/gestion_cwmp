@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ParametrosController extends Controller
 {
-    public $mainip = '172.21.22.136';
+    public $mainip = '192.168.0.102';
     /**
      * Display a listing of the resource.
      *

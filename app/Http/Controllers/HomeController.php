@@ -9,7 +9,7 @@ use App\Models\ModemCPE;
 
 class HomeController extends Controller
 {
-    public $mainip = '172.21.22.136';
+    public $mainip = '192.168.0.102';
     /**
      * Create a new controller instance.
      *
@@ -27,7 +27,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $i=0;
+        /*$i=0;
         $link = mysqli_connect( "172.21.22.136", "norah3","Norah123", "sistemas" )or( "Error :" . mysqli_error( $link ) );
 
         $lia1=mysqli_query($link,"SELECT * FROM activos_cttos");
@@ -37,7 +37,7 @@ class HomeController extends Controller
             $i++;
         }
         $co = count($ctto);
-        echo $co;
+        echo $co;*/
 
         $id = Auth::user()->roles_id;
         $ch = curl_init();
@@ -54,6 +54,6 @@ class HomeController extends Controller
         $mod = ModemCPE::all();
         $lmod = count($mod);
         echo $lusu;
-        return view('home', ['id' => $id, 'ctto' => $ctto, 'telf' => $telf, 'co' => $co, 'obj' => $obj, 'l' => $l, 'usu' => $usu, 'lusu' => $lusu, 'mod' => $mod, 'lmod' => $lmod]);
+        return view('home', ['id' => $id, /*'ctto' => $ctto, 'telf' => $telf, 'co' => $co,*/ 'obj' => $obj, 'l' => $l, 'usu' => $usu, 'lusu' => $lusu, 'mod' => $mod, 'lmod' => $lmod]);
     }
 }

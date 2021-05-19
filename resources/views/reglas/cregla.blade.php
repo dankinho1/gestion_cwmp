@@ -8,7 +8,7 @@
                     <div class="card-header">{{ __('Crear codigo') }}</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('users.store') }}">
+                        <form method="POST" action="{{ route('regla.store') }}">
                             @csrf
 
                             <div class="form-group row">
@@ -29,7 +29,7 @@
                                 <label for="code" class="col-md-4 col-form-label text-md-right">{{ __('Codigo') }}</label>
 
                                 <div class="col-md-6">
-                                    <textarea  cols="30" rows="10" id="code" type="text" class="form-control @error('email') is-invalid @enderror" name="code" value="{{ old('code') }}" required autocomplete="code">
+                                    <textarea  cols="30" rows="10" id="code" type="text" class="form-control @error('email') is-invalid @enderror" name="code" required autocomplete="code">
                                     </textarea>
 
                                     @error('code')

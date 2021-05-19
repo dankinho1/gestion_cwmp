@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 class ReglaController extends Controller
 {
+    public $mainip = '192.168.0.102';
     /**
      * Display a listing of the resource.
      *
@@ -35,6 +36,19 @@ class ReglaController extends Controller
     public function store(Request $request)
     {
         //
+        $name = $request->name;
+        $code = $request->code;
+        $post = $code;
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "http://".$this->mainip.":7557/provisions/".$name);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+        $output = curl_exec($ch);
+        curl_close($ch);
+        $objpost = json_decode($output);
+
+        return redirect()->route('home');
     }
 
     /**
@@ -92,5 +106,25 @@ class ReglaController extends Controller
     {
 
         return view('reglas.aregla', ['id' => 0]);
+    }
+
+    public function store2(Request $request)
+    {
+        //
+        $name = $request->name;
+        $event = $request->event;
+        $precondition = $request->precondition;
+        $regla = $request->regla;
+        $post = '{"weight": 0, "channel":"'.$name.'", "precondition": "'.$precondition.'", "events": {"'.$event.'": true}, "configurations": [{"type": "provision", "name": "'.$regla.'", "args": null}]}';
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "http://".$this->mainip.":7557/presets/".$name);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+        $output = curl_exec($ch);
+        curl_close($ch);
+        $objpost = json_decode($output);
+
+        return redirect()->route('home');
     }
 }
