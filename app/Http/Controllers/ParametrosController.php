@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ParametrosController extends Controller
 {
-    public $mainip = '192.168.0.102';
+    public $mainip = '172.21.22.136';
     /**
      * Display a listing of the resource.
      *
@@ -158,27 +158,35 @@ class ParametrosController extends Controller
         $o=0;
         $oo=0;
         $oo2=0;
+        $oo3=0;
         while($o<$l) {
         for ($ii=1; $ii<=10; $ii++) {
         for ($jj=1; $jj<=10; $jj++) {
-        if(isset($obj[$o]->InternetGatewayDevice->WANDevice->{$ii}->WANConnectionDevice->{$jj})){
-            $ee[$oo]=$ii;
-            $ee2[$oo2]=$jj;
-        $oo2++;
-        $oo++;
-        }
+            for ($kk = 1; $kk <= 10; $kk++) {
+                if (isset($obj[$o]->InternetGatewayDevice->WANDevice->{$ii}->WANConnectionDevice->{$jj}->WANPPPConnection->{$kk})) {
+                    $ee[$oo] = $ii;
+                    $ee2[$oo2] = $jj;
+                    $ee3[$oo3] = $kk;
+                    $oo2++;
+                    $oo3++;
+                    $oo++;
+                }
+            }
         }
         }
             $o++;
         }
-        $eel=count($ee);
+        //print_r($ee2);
+        if($obj) {
+            $eel = count($ee);
+        }
         if(!$obj) {
             echo "OBJ2 EX";
             return view('cpe.tr143', ['id' => $r, 'obj' => $obj2, 'l' => $l2]);
         }
         if(!$obj2) {
             echo "OBJ1 EX";
-            return view('cpe.tr098', ['id' => $r, 'obj' => $obj, 'l' => $l, 'ee' => $ee, 'ee2' => $ee2, 'eel' => $eel]);
+            return view('cpe.tr098', ['id' => $r, 'obj' => $obj, 'l' => $l, 'ee' => $ee, 'ee2' => $ee2, 'ee3' => $ee3, 'eel' => $eel]);
         }
     }
 

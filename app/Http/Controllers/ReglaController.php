@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class ReglaController extends Controller
 {
-    public $mainip = '192.168.0.102';
+    public $mainip = '172.21.22.136';
     /**
      * Display a listing of the resource.
      *

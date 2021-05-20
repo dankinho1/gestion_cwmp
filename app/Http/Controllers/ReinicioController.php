@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ReinicioController extends Controller
 {
-    public $mainip = '192.168.0.102';
+    public $mainip = '172.21.22.136';
     //
     public function reinicio(Request $request)
     {

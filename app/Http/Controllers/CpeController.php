@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class CpeController extends Controller
 {
-    public $mainip = '192.168.0.102';
+    public $mainip = '172.21.22.136';
     /**
      * Display a listing of the resource.
      *
@@ -108,7 +108,7 @@ class CpeController extends Controller
 
     public function listed()
     {
-        /*$i=0;
+        $i=0;
         $link = mysqli_connect( "172.21.22.136", "norah3","Norah123", "sistemas" )or( "Error :" . mysqli_error( $link ) );
 
         $lia1=mysqli_query($link,"SELECT * FROM activos_cttos");
@@ -118,7 +118,7 @@ class CpeController extends Controller
             $i++;
         }
         $co = count($ctto);
-        echo $co;*/
+        echo $co;
 
         $id = Auth::user()->roles_id;
         echo $id;
