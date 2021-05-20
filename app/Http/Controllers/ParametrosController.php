@@ -123,7 +123,7 @@ class ParametrosController extends Controller
         curl_close($ch);
         $r = substr($output,0,-2);
         $r = substr($r,2);
-        $objpost = json_decode($output);
+        $objpost = json_decode($output);*/
 
         $post = '{"name": "refreshObject", "objectName": "Device"}';
         $ch = curl_init();
@@ -134,7 +134,7 @@ class ParametrosController extends Controller
         curl_close($ch);
         $r = substr($output,0,-2);
         $r = substr($r,2);
-        $objpost2 = json_decode($output);*/
+        $objpost2 = json_decode($output);
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "http://".$this->mainip.":7557/devices/?query=%7B%22InternetGatewayDevice.DeviceInfo.SerialNumber%22%3A%22".$se."%22%7D");
@@ -153,12 +153,18 @@ class ParametrosController extends Controller
         $l = count($obj);
         $l2 = count($obj2);
         echo $l;
-        //print_r($obj[0]->InternetGatewayDevice->WANDevice->{1}->WANConnectionDevice->{1});
+        /*print_r($obj[0]->InternetGatewayDevice->WANDevice->{3}->WANConnectionDevice->{1}->WANIPConnection);
+        if(isset($obj[0]->InternetGatewayDevice->WANDevice->{3}->WANConnectionDevice->{1}->WANIPConnection->{5})) {
+            echo 'true';
+        } else echo 'false';*/
         //print_r($obj2);
         $o=0;
         $oo=0;
         $oo2=0;
         $oo3=0;
+        $ooip=0;
+        $ooip2=0;
+        $ooip3=0;
         while($o<$l) {
         for ($ii=1; $ii<=10; $ii++) {
         for ($jj=1; $jj<=10; $jj++) {
@@ -171,6 +177,14 @@ class ParametrosController extends Controller
                     $oo3++;
                     $oo++;
                 }
+                if (isset($obj[$o]->InternetGatewayDevice->WANDevice->{$ii}->WANConnectionDevice->{$jj}->WANIPConnection->{$kk})) {
+                    $eeip[$oo] = $ii;
+                    $eeip2[$oo2] = $jj;
+                    $eeip3[$oo3] = $kk;
+                    $ooip2++;
+                    $ooip3++;
+                    $ooip++;
+                }
             }
         }
         }
@@ -179,6 +193,7 @@ class ParametrosController extends Controller
         //print_r($ee2);
         if($obj) {
             $eel = count($ee);
+            $eeipl = count($eeip);
         }
         if(!$obj) {
             echo "OBJ2 EX";
@@ -186,7 +201,7 @@ class ParametrosController extends Controller
         }
         if(!$obj2) {
             echo "OBJ1 EX";
-            return view('cpe.tr098', ['id' => $r, 'obj' => $obj, 'l' => $l, 'ee' => $ee, 'ee2' => $ee2, 'ee3' => $ee3, 'eel' => $eel]);
+            return view('cpe.tr098', ['id' => $r, 'obj' => $obj, 'l' => $l, 'ee' => $ee, 'ee2' => $ee2, 'ee3' => $ee3, 'eel' => $eel, 'eeip' => $eeip, 'eeip2' => $eeip2, 'eeip3' => $eeip3, 'eeipl' => $eeipl]);
         }
     }
 
@@ -242,27 +257,35 @@ class ParametrosController extends Controller
         $o=0;
         $oo=0;
         $oo2=0;
+        $oo3=0;
         while($o<$l) {
             for ($ii=1; $ii<=10; $ii++) {
                 for ($jj=1; $jj<=10; $jj++) {
-                    if(isset($obj[$o]->InternetGatewayDevice->WANDevice->{$ii}->WANConnectionDevice->{$jj})){
-                        $ee[$oo]=$ii;
-                        $ee2[$oo2]=$jj;
-                        $oo2++;
-                        $oo++;
+                    for ($kk = 1; $kk <= 10; $kk++) {
+                        if (isset($obj[$o]->InternetGatewayDevice->WANDevice->{$ii}->WANConnectionDevice->{$jj}->WANPPPConnection->{$kk})) {
+                            $ee[$oo] = $ii;
+                            $ee2[$oo2] = $jj;
+                            $ee3[$oo3] = $kk;
+                            $oo2++;
+                            $oo3++;
+                            $oo++;
+                        }
                     }
                 }
             }
             $o++;
         }
-        $eel=count($ee);
+        //print_r($ee2);
+        if($obj) {
+            $eel = count($ee);
+        }
         if(!$obj) {
             echo "OBJ2 EX";
             return view('cpe.tr143mod', ['id' => $r, 'obj' => $obj2, 'l' => $l2]);
         }
         if(!$obj2) {
             echo "OBJ1 EX";
-            return view('cpe.tr098mod', ['id' => $r, 'obj' => $obj, 'l' => $l, 'ee' => $ee, 'ee2' => $ee2, 'eel' => $eel]);
+            return view('cpe.tr098mod', ['id' => $r, 'obj' => $obj, 'l' => $l, 'ee' => $ee, 'ee2' => $ee2, 'ee3' => $ee3, 'eel' => $eel]);
         }
     }
 }

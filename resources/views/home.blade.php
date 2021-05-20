@@ -1,6 +1,22 @@
 @extends('layouts.app')
 
 @section('content')
+    <?php
+    if (isset($f[0])) {
+    /*if($f==1) {
+        echo '<script language="javascript">
+            alert("El contrato ya esta registrado");
+        </script>';
+        }
+    elseif($f==2) {
+        echo '<script language="javascript">
+            alert("El telefono ya esta registrado");
+        </script>';
+        }
+    }*/
+        echo $f[0];
+        }
+    ?>
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-lg-12">
@@ -39,7 +55,7 @@
                     <div class="tab-pane fade show active" id="cpe" role="tabpanel" aria-labelledby="cpe-tab">
                         <br><br>
                         <a type="button" href="{{ route('vercpe') }}" class="btn btn-outline-primary">Ver lista de CPE</a>
-                        <a type="button" href="{{ route('buscpe') }}" class="btn btn-outline-primary">Buscar CPE</a><br>
+                        <a type="button" href="{{ route('buscpe') }}" class="btn btn-outline-primary">Buscar CPEs Registrados</a><br>
                     </div>
                     @if($id!="2")
                     <div class="tab-pane fade" id="estadistica" role="tabpanel" aria-labelledby="estadistica-tab">

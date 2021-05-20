@@ -13,6 +13,8 @@
 
             </div>
         </div>
+        <br><a type="button" href="{{ route('vercpe') }}" class="btn btn-outline-primary">Volver</a>
+        <a type="button" href="{{ route('home') }}" class="btn btn-outline-primary">Pagina Principal</a><br>
     </div>
 
     <script>

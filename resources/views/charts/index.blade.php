@@ -1,6 +1,6 @@
-@extends('cpe.par')
+@extends('layouts.app')
 
-@section('tr')
+@section('content')
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
 <div class="container">
@@ -14,6 +14,9 @@
             </div>
         </div>
     </div>
+    <br><br><center><a type="button" href="{{ route('home') }}" class="btn btn-outline-primary">Volver</a>
+        <a type="button" href="{{ route('home') }}" class="btn btn-outline-primary">Pagina Principal</a><br>
+    </center>
 </div>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

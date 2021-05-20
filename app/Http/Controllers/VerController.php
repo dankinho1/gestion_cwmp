@@ -29,8 +29,9 @@ class VerController extends Controller
         $obj = json_decode($output);
         // print_r($obj);
         $l = count($obj);
+        $dcpe = ModemCPE::all();
         //    echo "<br>".$obj->InternetGatewayDevice->DeviceInfo->ModelName->_value;
-        return view('cpe.ver', ['id' => $r, 'obj' => $obj, 'l' => $l]);
+        return view('cpe.ver', ['id' => $r, 'obj' => $obj, 'l' => $l, 'dcpe' => $dcpe]);
     }
 
     public function buscar(Request $request)
@@ -55,7 +56,6 @@ class VerController extends Controller
     {
         $dat = $request->dat;
         foreach (ModemCPE::all() as $cpe) {
-            echo $cpe->serial;
             if ($cpe->serial == $dat) {
                 $dat2 = $dat;
                 break;
@@ -92,14 +92,15 @@ class VerController extends Controller
 
             // print_r($obj);
             $l2 = count($obj2);
+            $dcpe = ModemCPE::all();
 
             if(!$obj) {
                 echo "OBJ2 EX";
-                return view('cpe.ver', ['id' => $r, 'obj' => $obj2, 'l' => $l2]);
+                return view('cpe.ver', ['id' => $r, 'obj' => $obj2, 'l' => $l2, 'dcpe' => $dcpe]);
             }
             if(!$obj2) {
                 echo "OBJ1 EX";
-                return view('cpe.ver', ['id' => $r, 'obj' => $obj, 'l' => $l]);
+                return view('cpe.ver', ['id' => $r, 'obj' => $obj, 'l' => $l, 'dcpe' => $dcpe]);
             }
     }
 }

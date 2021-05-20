@@ -42,11 +42,26 @@ class CpeController extends Controller
         $ctto = $request->ctto;
         $telf = $request->telf;
         $ser = $request->ser;
-        $modemcpe = new ModemCPE();
-        $modemcpe->serial = $ser;
-        $modemcpe->contrato = $ctto;
-        $modemcpe->telefono = $telf;
-        $modemcpe->save();
+        $dcpe = ModemCPE::all();
+        $f=0;
+        foreach($dcpe as $dcp) {
+            if($dcp->contrato==$ctto) {
+                echo '<script language="javascript">alert("El contrato ya esta registrado");</script>';
+                $f=1;
+                break;
+            } elseif ($dcp->telefono==$telf) {
+                echo '<script language="javascript">alert("El telefono ya esta registrado");</script>';
+                $f=2;
+                break;
+            }
+        }
+        if($f==0) {
+            $modemcpe = new ModemCPE();
+            $modemcpe->serial = $ser;
+            $modemcpe->contrato = $ctto;
+            $modemcpe->telefono = $telf;
+            $modemcpe->save();
+        }
 
         return redirect()->route('home');
     }

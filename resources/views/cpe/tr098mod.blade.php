@@ -16,8 +16,8 @@
     <?php
     for($i=0; $i<$eel;$i++) {
     ?>
-    Red WAN: {{ $obj[0]->InternetGatewayDevice->WANDevice->{$ee[$i]}->WANConnectionDevice->{$ee2[$i]}->WANIPConnection->{1}->AddressingType->_value }}<br>
-    Estado: @if($obj[0]->InternetGatewayDevice->WANDevice->{$ee[$i]}->WANConnectionDevice->{$ee2[$i]}->WANIPConnection->{1}->ConnectionStatus->_value=='Connected') Conectado
+    Red WAN: {{ $obj[0]->InternetGatewayDevice->WANDevice->{$ee[$i]}->WANConnectionDevice->{$ee2[$i]}->WANPPPConnection->{$ee3[$i]}->Name->_value }}<br>
+    Estado: @if($obj[0]->InternetGatewayDevice->WANDevice->{$ee[$i]}->WANConnectionDevice->{$ee2[$i]}->WANPPPConnection->{$ee3[$i]}->ConnectionStatus->_value=='Connected') Conectado
     @endif<br>
     <?php
     }

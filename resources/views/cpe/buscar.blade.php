@@ -36,4 +36,7 @@
                 <button type='submit' class='btn btn-outline-primary'>Buscar</button>
             </form>
         </div>
+        <br><br><center><a type="button" href="{{ route('home') }}" class="btn btn-outline-primary">Volver</a>
+            <a type="button" href="{{ route('home') }}" class="btn btn-outline-primary">Pagina Principal</a><br>
+        </center>
 @endsection

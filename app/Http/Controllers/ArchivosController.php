@@ -30,7 +30,8 @@ class ArchivosController extends Controller
         $r = substr($r,2);
         $obj = json_decode($output);
         // print_r($obj);
-        $l = count($obj);
+        if(isset($obj)) $l = count($obj);
+        else $l=0;
         //    echo "<br>".$obj->InternetGatewayDevice->DeviceInfo->ModelName->_value;
         return view('cpe.archivos', ['id' => $r, 'obj' => $obj, 'l' => $l, 'idd' => $idd]);
     }
