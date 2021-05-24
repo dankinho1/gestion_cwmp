@@ -40,13 +40,26 @@ class ParametrosController extends Controller
         $id = $request->id;
         $id = str_replace("%","%25",$id);
         $se = $request->ser;
+        if(isset($request->ct)) {
+            $ct = $request->ct;
+            $ct2 = $request->ct2;
+            $addip = $request->addip;
+            $msub = $request->msub;
+            $post = '{"name":"setParameterValues", "parameterValues":[["Device.IP.Interface.'.$ct.'.IPv4Address.'.$ct2.'.IPAddress", "'.$addip.'", "xsd:string"], ["Device.IP.Interface.'.$ct.'.IPv4Address.'.$ct2.'.SubnetMask", "'.$msub.'", "xsd:string"]]}';
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, "http://".$this->mainip.":7557/devices/".$id."/tasks?connection_request");
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+            $output = curl_exec($ch);
+            curl_close($ch);
+        }
         $vp = $request->ipdhcp;
-        $ssid = $request->ssid;
+        //$ssid = $request->ssid;
         $r = Auth::user()->roles_id;
         echo $se;
         echo $vp;
-        echo $ssid;
-        $post = '{"name":"setParameterValues", "parameterValues":[["InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.SSID", "'.$ssid.'", "xsd:string"]]}';
+        //echo $ssid;
+        /*$post = '{"name":"setParameterValues", "parameterValues":[["InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.SSID", "'.$ssid.'", "xsd:string"]]}';
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "http://".$this->mainip.":7557/devices/".$id."/tasks?connection_request");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -55,7 +68,7 @@ class ParametrosController extends Controller
         curl_close($ch);
         $r = substr($output,0,-2);
         $r = substr($r,2);
-        $objpost = json_decode($output);
+        $objpost = json_decode($output);*/
 
         return redirect()->route('home');
     }
@@ -223,7 +236,7 @@ class ParametrosController extends Controller
         curl_close($ch);
         $r = substr($output,0,-2);
         $r = substr($r,2);
-        $objpost = json_decode($output);
+        $objpost = json_decode($output);*/
 
         $post = '{"name": "refreshObject", "objectName": "Device"}';
         $ch = curl_init();
@@ -234,7 +247,7 @@ class ParametrosController extends Controller
         curl_close($ch);
         $r = substr($output,0,-2);
         $r = substr($r,2);
-        $objpost2 = json_decode($output);*/
+        $objpost2 = json_decode($output);
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "http://".$this->mainip.":7557/devices/?query=%7B%22InternetGatewayDevice.DeviceInfo.SerialNumber%22%3A%22".$se."%22%7D");
@@ -281,7 +294,26 @@ class ParametrosController extends Controller
         }
         if(!$obj) {
             echo "OBJ2 EX";
-            return view('cpe.tr143mod', ['id' => $r, 'obj' => $obj2, 'l' => $l2]);
+            $o=0;
+            $oo=0;
+            $oo2=0;
+            while($o<$l2) {
+                for ($ii=1; $ii<=20; $ii++) {
+                    for ($jj = 1; $jj <= 20; $jj++) {
+                        if (isset($obj2[$o]->Device->IP->Interface->{$ii}->IPv4Address->{$jj})) {
+                            $ee[$oo] = $ii;
+                            $ee2[$oo2] = $jj;
+                            $oo2++;
+                            $oo++;
+                        }
+                    }
+                }
+                $o++;
+            }
+            if($obj2) {
+                $eel2 = count($ee);
+            }
+            return view('cpe.tr143mod', ['id' => $r, 'obj' => $obj2, 'l' => $l2, 'ee' => $ee, 'ee2' => $ee2, 'eel2' => $eel2]);
         }
         if(!$obj2) {
             echo "OBJ1 EX";

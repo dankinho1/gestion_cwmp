@@ -38,7 +38,7 @@ class ReinicioController extends Controller
         $r = substr($r,2);
         $obj = json_decode($output);
         $l = count($obj);
-        return view('home', ['id' => $id, 'obj' => $obj, 'l' => $l]);
+        return redirect()->route('home');
     }
 
     public function factoryreset(Request $request)
@@ -70,6 +70,6 @@ class ReinicioController extends Controller
         $r = substr($r,2);
         $obj = json_decode($output);
         $l = count($obj);
-        return view('home', ['id' => $id, 'obj' => $obj, 'l' => $l]);
+        return redirect()->route('home');
     }
 }

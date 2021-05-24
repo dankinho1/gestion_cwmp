@@ -18,6 +18,7 @@ class ArchivosController extends Controller
     public function index(Request $request)
     {
         $class = $request->class;
+        $class = str_replace(" ","%20",$class);
         $idd = $request->idd;
         $r = Auth::user()->roles_id;
         echo $r;
@@ -40,6 +41,7 @@ class ArchivosController extends Controller
     {
         $id = $request->id;
         $idd = $request->idd;
+        $idd = str_replace("%","%25",$idd);
         echo $id;
 
         $post = '{ "name": "download", "file": "'.$id.'"}';

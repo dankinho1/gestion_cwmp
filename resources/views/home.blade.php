@@ -53,13 +53,20 @@
                 </ul>
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="cpe" role="tabpanel" aria-labelledby="cpe-tab">
-                        <br><br>
+                        <br><br><br><br><br>
+                        <center>
                         <a type="button" href="{{ route('vercpe') }}" class="btn btn-outline-primary">Ver lista de CPE</a>
                         <a type="button" href="{{ route('buscpe') }}" class="btn btn-outline-primary">Buscar CPEs Registrados</a><br>
+                        <br><br><br><br><br><br>
+                        </center>
                     </div>
                     @if($id!="2")
                     <div class="tab-pane fade" id="estadistica" role="tabpanel" aria-labelledby="estadistica-tab">
+                        <br><br><br><br><br>
+                        <center>
                         <a type="button" href="{{ route('charts') }}" class="btn btn-outline-primary">CPEs activos e inactivos</a>
+                        <br><br><br><br><br><br>
+                        </center>
                     </div>
                     @endif
                     <div class="tab-pane fade" id="gestion" role="tabpanel" aria-labelledby="gestion-tab">
@@ -84,7 +91,7 @@
                             <td>{{ $mod[$j]->contrato }}</td>
                             <td>{{ $mod[$j]->telefono }}</td>
                             <td>
-                                <form action='{{ route('reinicio') }}' method='POST' role='form'>
+                                <form onsubmit="return confirm('ADVERTENCIA: Reiniciar el equipo puede llevar a fallas de conexion con el servidor. Esta seguro de que quiere reiniciar?');" action='{{ route('reinicio') }}' method='POST' role='form'>
                                     {{ csrf_field() }}
                                     <input type='hidden' id='id' name='id' value='{{ $obj[$i]->_id }}'>
                                     <button type='submit' class='btn btn-outline-primary'>Reiniciar CPE</button>
@@ -115,6 +122,7 @@
                         </table>
                     </div>
                     <div class="tab-pane fade" id="registrarcpe" role="tabpanel" aria-labelledby="registrarcpe-tab">
+                        <center>
                         <table data-toggle="table">
                             <thead>
                             <tr>
@@ -180,12 +188,106 @@
                             {{ csrf_field() }}
                             <button type='submit' class='btn btn-outline-primary'>Eliminar CPEs</button>
                         </form>
+                        </center>
                         <br>
                     </div>
                     <div class="tab-pane fade" id="aprov" role="tabpanel" aria-labelledby="aprov-tab">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm">
                         <br><br>
+                        <table data-toggle="table">
+                            <thead>
+                            <tr>
+                                <th>Regla</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php
+                            for ($i=0; $i<$l2; $i++) {
+                            if(isset($obj2[$i]->_id)){
+                            ?>
+                            <tr>
+                                <td>{{ $obj2[$i]->_id }}</td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <form action='{{ route('regla.edit',$obj2[$i]->_id) }}' method='GET' role='form'>
+                                        {{ csrf_field() }}
+                                        <input type='hidden' id='id' name='id' value='{{ $obj2[$i]->_id }}'>
+                                        <button type='submit' class='btn btn-outline-primary'>Editar</button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form onsubmit="return confirm('Quiere eliminar la regla?');" action='{{ route('regla.destroy',$obj2[$i]->_id) }}' method='POST' role='form'>
+                                        {{ csrf_field() }}
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type='hidden' id='idd' name='idd' value='{{ $obj2[$i]->_id }}'>
+                                        <button type="submit" class="btn btn-outline-primary">Eliminar</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <?php
+                            }
+                            }
+                            ?>
+                            </tbody>
+                        </table>
+                                </div>
+                                <div class="col-sm">
+                                    <br><br>
+                                    <table data-toggle="table">
+                                        <thead>
+                                        <tr>
+                                            <th>Reglas asignadas</th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php
+                                        for ($i=0; $i<$l3; $i++) {
+                                        if(isset($obj3[$i]->_id)){
+                                        ?>
+                                        <tr>
+                                            <td>{{ $obj3[$i]->_id }}</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>
+                                                <form action='{{ route('earegla', $obj3[$i]->_id) }}' method='GET' role='form'>
+                                                    {{ csrf_field() }}
+                                                    <input type='hidden' id='id' name='id' value='{{ $obj3[$i]->_id }}'>
+                                                    <button type='submit' class='btn btn-outline-primary'>Editar</button>
+                                                </form>
+                                            </td>
+                                            <td>
+                                                <form onsubmit="return confirm('Quiere eliminar la regla?');" action='{{ route('daregla',$obj3[$i]->_id) }}' method='POST' role='form'>
+                                                    {{ csrf_field() }}
+                                                    <input type="hidden" name="_method" value="DELETE">
+                                                    <input type='hidden' id='idd' name='idd' value='{{ $obj3[$i]->_id }}'>
+                                                    <button type="submit" class="btn btn-outline-primary">Eliminar</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        <?php
+                                        }
+                                        }
+                                        ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <center>
                         <a type="button" href="{{ route('cregla') }}" class="btn btn-outline-primary">Crear Regla</a>
                         <a type="button" href="{{ route('aregla') }}" class="btn btn-outline-primary">Asignar Regla</a><br>
+                        </center>
                     </div>
                     <div class="tab-pane fade" id="registrarusu" role="tabpanel" aria-labelledby="registrarusu-tab">
                         <table data-toggle="table">
@@ -215,7 +317,7 @@
                                     </form>
                                 </td>
                                 <td>
-                                    <form onsubmit="return confirm('Do you really want to submit the form?');" action='{{ route('users.destroy',$usu[$i]->id) }}' method='POST' role='form'>
+                                    <form onsubmit="return confirm('Quiere eliminar el usuario?');" action='{{ route('users.destroy',$usu[$i]->id) }}' method='POST' role='form'>
                                         {{ csrf_field() }}
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type='hidden' id='idd' name='idd' value='{{ $obj[$i]->_id }}'>

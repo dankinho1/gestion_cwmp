@@ -49,11 +49,28 @@ class HomeController extends Controller
         $r = substr($r,2);
         $obj = json_decode($output);
         $l = count($obj);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "http://".$this->mainip.":7557/provisions/");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $output = curl_exec($ch);
+        curl_close($ch);
+        $obj2 = json_decode($output);
+        $l2 = count($obj2);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "http://".$this->mainip.":7557/presets/");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $output = curl_exec($ch);
+        curl_close($ch);
+        $obj3 = json_decode($output);
+        $l3 = count($obj3);
+
         $usu = User::all();
         $lusu = count($usu);
         $mod = ModemCPE::all();
         $lmod = count($mod);
         echo $lusu;
-        return view('home', ['id' => $id, 'ctto' => $ctto, 'telf' => $telf, 'co' => $co, 'obj' => $obj, 'l' => $l, 'usu' => $usu, 'lusu' => $lusu, 'mod' => $mod, 'lmod' => $lmod]);
+        return view('home', ['id' => $id, 'ctto' => $ctto, 'telf' => $telf, 'co' => $co, 'obj' => $obj, 'l' => $l, 'usu' => $usu, 'lusu' => $lusu, 'mod' => $mod, 'lmod' => $lmod, 'obj2' => $obj2, 'l2' => $l2, 'obj3' => $obj3, 'l3' => $l3]);
     }
 }

@@ -1,6 +1,7 @@
 @extends('cpe.par')
 
 @section('tr')
+    <h2>Datos Tecnicos</h2>
     CPE ID: {{ $obj[0]->_id }}<br>
     Serial: {{ $obj[0]->Device->DeviceInfo->SerialNumber->_value }}<br>
     Version del Hardware: {{ $obj[0]->Device->DeviceInfo->HardwareVersion->_value }}<br>
@@ -12,6 +13,37 @@
     Clase: {{ $obj[0]->Device->DeviceInfo->ProductClass->_value }}<br>
     Tiempo desde el ultimo reinicio: {{ $obj[0]->Device->DeviceInfo->UpTime->_value }} s<br>
     <br>
+    <br>
+    <h2>Interfaces</h2>
+        <?php
+        for($i=0;$i<$eel2;$i++) {
+        ?>
+        Interface: {{ $ee[$i] }} <br>
+        Direccion IPv4: {{ $ee2[$i] }} <br>
+    <form action='{{ route('parametros.store') }}' method='POST' role='form'>
+        {{ csrf_field() }}
+        Habilitar: <select id="int{{ $ee[$i] }}" name="int{{ $ee[$i] }}"><option value="true" selected>habilitar</option><option value="false">deshabilitar</option></select> (estado actual: {{ $obj[0]->Device->IP->Interface->{$ee[$i]}->IPv4Address->{$ee2[$i]}->Status->_value }})<br>
+        <input type='hidden' id='ser' name='ser' value='{{ $obj[0]->_deviceId->_SerialNumber }}'>
+        <input type='hidden' id='id' name='id' value='{{ $obj[0]->_id }}'>
+        <button type='submit' class='btn btn-outline-primary'>Cambiar</button>
+    </form>
+        Tipo de IP: <input type="text" id="tip" name="tip" value="{{ $obj[0]->Device->IP->Interface->{$ee[$i]}->IPv4Address->{$ee2[$i]}->AddressingType->_value }}" disabled><br>
+    <form action='{{ route('parametros.store') }}' method='POST' role='form'>
+        {{ csrf_field() }}
+        Direccion IP: <input type="text" id="addip" name="addip" value="{{ $obj[0]->Device->IP->Interface->{$ee[$i]}->IPv4Address->{$ee2[$i]}->IPAddress->_value }}"><br>
+        Mascara de Subred: <input type="text" id="msub" name="msub" value="{{ $obj[0]->Device->IP->Interface->{$ee[$i]}->IPv4Address->{$ee2[$i]}->SubnetMask->_value }}"><br>
+        <input type='hidden' id='ser' name='ser' value='{{ $obj[0]->_deviceId->_SerialNumber }}'>
+        <input type='hidden' id='id' name='id' value='{{ $obj[0]->_id }}'>
+        <input type='hidden' id='ct2' name='ct2' value='{{ $ee2[$i] }}'>
+        <input type='hidden' id='ct' name='ct' value='{{ $ee[$i] }}'>
+        <button type='submit' class='btn btn-outline-primary'>Cambiar</button>
+    </form>
+    <br>----------------------------------------------------------------------------------------<br>
+        <?php
+        }
+        ?>
+        <br>
+        <h2>DHCP</h2>
     <form action='{{ route('parametros.store') }}' method='POST' role='form'>
         {{ csrf_field() }}
         IP DHCP: <input type="text" id="ipdhcp" name="ipdhcp" value="{{ $obj[0]->Device->DHCPv4->Server->Pool->{4}->IPRouters->_value }}"><br>

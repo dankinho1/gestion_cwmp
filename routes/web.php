@@ -45,6 +45,9 @@ Route::get('/listdes', 'App\Http\Controllers\CpeController@listdes')->name('list
 
 Route::get('/cregla', 'App\Http\Controllers\ReglaController@cregla')->name('cregla');
 Route::get('/aregla', 'App\Http\Controllers\ReglaController@aregla')->name('aregla');
+Route::get('/regla/{earegla}/earegla', 'App\Http\Controllers\ReglaController@earegla')->name('earegla');
+Route::delete('/regla/{daregla}/daregla', 'App\Http\Controllers\ReglaController@daregla')->name('daregla');
+Route::post('/maregla', 'App\Http\Controllers\ReglaController@maregla')->name('maregla');
 Route::post('/store2', 'App\Http\Controllers\ReglaController@store2')->name('store2');
 
 Route::get('/charts', 'App\Http\Controllers\ChartController@index')->name('charts');
