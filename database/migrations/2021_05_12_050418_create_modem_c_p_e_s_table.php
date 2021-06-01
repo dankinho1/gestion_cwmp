@@ -18,6 +18,7 @@ class CreateModemCPESTable extends Migration
             $table->string('serial');
             $table->integer('contrato');
             $table->integer('telefono');
+            $table->string('nodo');
             $table->timestamps();
         });
     }

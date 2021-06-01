@@ -70,7 +70,7 @@ class HomeController extends Controller
         $lusu = count($usu);
         $mod = ModemCPE::all();
         $lmod = count($mod);
-        echo $lusu;
+        echo count($mod);
         return view('home', ['id' => $id, 'ctto' => $ctto, 'telf' => $telf, 'co' => $co, 'obj' => $obj, 'l' => $l, 'usu' => $usu, 'lusu' => $lusu, 'mod' => $mod, 'lmod' => $lmod, 'obj2' => $obj2, 'l2' => $l2, 'obj3' => $obj3, 'l3' => $l3]);
     }
 }

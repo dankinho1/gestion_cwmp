@@ -30,4 +30,11 @@
         <input type='hidden' id='id' name='id' value='{{ $obj[0]->_id }}'>
         <button type='submit' class='btn btn-outline-primary'>Cambiar</button>
     </form>
+    <form action='{{ route('parametros.store') }}' method='POST' role='form'>
+        {{ csrf_field() }}
+        Password Wi-Fi: <input type="text" id="passwlan" name="passwlan" value="{{ $obj[0]->InternetGatewayDevice->LANDevice->{1}->WLANConfiguration->{1}->PreSharedKey->{1}->KeyPassphrase->_value }}"><br>
+        <input type='hidden' id='ser' name='ser' value='{{ $obj[0]->_deviceId->_SerialNumber }}'>
+        <input type='hidden' id='id' name='id' value='{{ $obj[0]->_id }}'>
+        <button type='submit' class='btn btn-outline-primary'>Cambiar</button>
+    </form>
 @endsection

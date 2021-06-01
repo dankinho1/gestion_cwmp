@@ -23,6 +23,7 @@ Auth::routes();
 Route::get('/reg', function () {
     return view('auth.register');
 })->name('reg');
+Route::group(['middleware' => 'auth'], function(){
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/vercpe', 'App\Http\Controllers\VerController@index')->name('vercpe');
 Route::get('/buscpe', 'App\Http\Controllers\VerController@buscar')->name('buscpe');
@@ -35,7 +36,6 @@ Route::post('/modpar', 'App\Http\Controllers\ParametrosController@modpar')->name
 Route::post('/rein', 'App\Http\Controllers\ReinicioController@reinicio')->name('reinicio');
 Route::post('/refa', 'App\Http\Controllers\ReinicioController@factoryreset')->name('factoryreset');
 
-Route::resource('admin/users', 'App\Http\Controllers\AdminUsersController');
 Route::resource('parametros', 'App\Http\Controllers\ParametrosController');
 Route::resource('regcpe', 'App\Http\Controllers\CpeController');
 Route::resource('regla', 'App\Http\Controllers\ReglaController');
@@ -51,3 +51,10 @@ Route::post('/maregla', 'App\Http\Controllers\ReglaController@maregla')->name('m
 Route::post('/store2', 'App\Http\Controllers\ReglaController@store2')->name('store2');
 
 Route::get('/charts', 'App\Http\Controllers\ChartController@index')->name('charts');
+    Route::get('/chnodos', 'App\Http\Controllers\ChartController@nodos')->name('chnodos');
+
+
+
+});
+
+Route::resource('admin/users', 'App\Http\Controllers\AdminUsersController');

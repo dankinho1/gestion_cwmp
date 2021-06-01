@@ -42,11 +42,13 @@ class AdminUsersController extends Controller
         $name = $request->name;
         $password = Hash::make($request->password);
         $email = $request->email;
+        $nivel = $request->nivel;
 
         $newu = new User();
         $newu->name = $name;
         $newu->email = $email;
         $newu->password = $password;
+        $newu->roles_id = $nivel;
         $newu->save();
 
         return redirect()->route('home');

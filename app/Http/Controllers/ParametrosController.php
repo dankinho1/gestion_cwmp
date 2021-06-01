@@ -54,21 +54,36 @@ class ParametrosController extends Controller
             curl_close($ch);
         }
         $vp = $request->ipdhcp;
-        //$ssid = $request->ssid;
         $r = Auth::user()->roles_id;
         echo $se;
         echo $vp;
         //echo $ssid;
-        /*$post = '{"name":"setParameterValues", "parameterValues":[["InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.SSID", "'.$ssid.'", "xsd:string"]]}';
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://".$this->mainip.":7557/devices/".$id."/tasks?connection_request");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
-        $output = curl_exec($ch);
-        curl_close($ch);
-        $r = substr($output,0,-2);
-        $r = substr($r,2);
-        $objpost = json_decode($output);*/
+        if(isset($request->ssid)) {
+            $ssid = $request->ssid;
+            $post = '{"name":"setParameterValues", "parameterValues":[["InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.SSID", "'.$ssid.'", "xsd:string"], ["InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.X_BROADCOM_COM_WlanAdapter.WlVirtIntfCfg.1.WlSsid", "A'.$ssid.'A", "xsd:string"]]}';
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, "http://".$this->mainip.":7557/devices/".$id."/tasks?connection_request");
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+            $output = curl_exec($ch);
+            curl_close($ch);
+            $r = substr($output,0,-2);
+            $r = substr($r,2);
+            $objpost = json_decode($output);
+        }
+        if(isset($request->passwlan)) {
+            $passwlan = $request->passwlan;
+            $post = '{"name":"setParameterValues", "parameterValues":[["InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.PreSharedKey.1.KeyPassphrase", "'.$passwlan.'", "xsd:string"], ["InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.X_BROADCOM_COM_WlanAdapter.WlVirtIntfCfg.1.WlWpaPsk", "A'.$passwlan.'A", "xsd:string"]]}';
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, "http://".$this->mainip.":7557/devices/".$id."/tasks?connection_request");
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+            $output = curl_exec($ch);
+            curl_close($ch);
+            $r = substr($output,0,-2);
+            $r = substr($r,2);
+            $objpost = json_decode($output);
+        }
 
         return redirect()->route('home');
     }
@@ -126,8 +141,8 @@ class ParametrosController extends Controller
         $se = $request->ser;
         $r = Auth::user()->roles_id;
 
-          /*
-        $post = '{"name": "refreshObject", "objectName": "InternetGatewayDevice"}';
+
+        $post = '{"name": "refreshObject", "objectName": "InternetGatewayDevice.DeviceInfo"}';
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "http://".$this->mainip.":7557/devices/".$id."/tasks?timeout=3000&connection_request");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -136,7 +151,7 @@ class ParametrosController extends Controller
         curl_close($ch);
         $r = substr($output,0,-2);
         $r = substr($r,2);
-        $objpost = json_decode($output);*/
+        $objpost = json_decode($output);
 
         $post = '{"name": "refreshObject", "objectName": "Device"}';
         $ch = curl_init();
@@ -205,8 +220,18 @@ class ParametrosController extends Controller
         }
         //print_r($ee2);
         if($obj) {
-            $eel = count($ee);
-            $eeipl = count($eeip);
+            if(isset($ee)) $eel = count($ee);
+            else {
+                $eel = 0;
+                $ee = 0;
+                $ee2 = 0;
+                $ee3 = 0;
+            }
+            if(isset($eeip)) $eeipl = count($eeip);
+            else {
+                $eeipl = 0;
+                $eeip = 0;
+            }
         }
         if(!$obj) {
             echo "OBJ2 EX";
@@ -283,6 +308,14 @@ class ParametrosController extends Controller
                             $oo3++;
                             $oo++;
                         }
+                        if (isset($obj2[$o]->Device->WANDevice->{$ii}->WANConnectionDevice->{$jj}->WANPPPConnection->{$kk})) {
+                            $ee[$oo] = $ii;
+                            $ee2[$oo2] = $jj;
+                            $ee3[$oo3] = $kk;
+                            $oo2++;
+                            $oo3++;
+                            $oo++;
+                        }
                     }
                 }
             }
@@ -290,7 +323,18 @@ class ParametrosController extends Controller
         }
         //print_r($ee2);
         if($obj) {
-            $eel = count($ee);
+            if (isset($ee)) $eel = count($ee);
+            else {
+                $eel = 0;
+                $ee = 0;
+                $ee2 = 0;
+                $ee3 = 0;
+            }
+            if (isset($eeip)) $eeipl = count($eeip);
+            else {
+                $eeipl = 0;
+                $eeip = 0;
+            }
         }
         if(!$obj) {
             echo "OBJ2 EX";
@@ -301,18 +345,18 @@ class ParametrosController extends Controller
                 for ($ii=1; $ii<=20; $ii++) {
                     for ($jj = 1; $jj <= 20; $jj++) {
                         if (isset($obj2[$o]->Device->IP->Interface->{$ii}->IPv4Address->{$jj})) {
-                            $ee[$oo] = $ii;
-                            $ee2[$oo2] = $jj;
-                            $oo2++;
-                            $oo++;
+                                $ee[$oo] = $ii;
+                                $ee2[$oo2] = $jj;
+                                $oo2++;
+                                $oo++;
                         }
                     }
                 }
                 $o++;
             }
-            if($obj2) {
+            if($obj2 && $ee) {
                 $eel2 = count($ee);
-            }
+            } else $eel2=0;
             return view('cpe.tr143mod', ['id' => $r, 'obj' => $obj2, 'l' => $l2, 'ee' => $ee, 'ee2' => $ee2, 'eel2' => $eel2]);
         }
         if(!$obj2) {

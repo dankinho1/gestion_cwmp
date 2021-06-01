@@ -61,6 +61,21 @@
                                 </div>
                             </div>
 
+                            <div class="form-group row">
+                                <label for="event" class="col-md-4 col-form-label text-md-right">{{ __('Nivel de Usuario') }}</label>
+
+                                <div class="col-md-6">
+                                    <select name="nivel" id="nivel">
+                                        <option value="1">Admnistrador</option>
+                                        <option value="2">Tecnico</option>
+                                        <option value="3">Helpdesk</option>
+                                        <option value="4">Administrativo</option>
+                                        <option value="5">Usuario</option>
+                                    </select>
+
+                                </div>
+                            </div>
+
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
                                     <button type="submit" class="btn btn-primary">

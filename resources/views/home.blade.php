@@ -65,6 +65,7 @@
                         <br><br><br><br><br>
                         <center>
                         <a type="button" href="{{ route('charts') }}" class="btn btn-outline-primary">CPEs activos e inactivos</a>
+                            <a type="button" href="{{ route('chnodos') }}" class="btn btn-outline-primary">CPEs con falla por nodos</a>
                         <br><br><br><br><br><br>
                         </center>
                     </div>
@@ -138,8 +139,12 @@
                             for ($i=0; $i<$l; $i++) {
                                 $v1[$i]=$obj[$i]->_deviceId->_SerialNumber;
                             }
+                            if(count($mod)!=0) {
                             for ($j=0; $j<$lmod; $j++) {
                                 $v2[$j]=$mod[$j]->serial;
+                            }
+                            } else {
+                                $v2[0]=0;
                             }
                             $dif = array_diff($v1, $v2);
                             $difl = count($dif);

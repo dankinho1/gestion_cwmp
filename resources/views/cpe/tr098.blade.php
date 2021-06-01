@@ -29,18 +29,18 @@ Estado: @if($obj[0]->InternetGatewayDevice->WANDevice->{$ee[$i]}->WANConnectionD
     if(isset($eeipl)) {
     for($i=0; $i<$eeipl;$i++) {
 ?>
-    Red WAN IP {{ $ee3[$i] }}: {{ $obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANConnectionDevice->{$eeip2[$i]}->WANIPConnection->{$eeip3[$i]}->Name->_value }}<br>
+    Red WAN IP {{ $eeip3[$i] }}: {{ $obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANConnectionDevice->{$eeip2[$i]}->WANIPConnection->{$eeip3[$i]}->Name->_value }}<br>
     Estado: @if($obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANConnectionDevice->{$eeip2[$i]}->WANIPConnection->{$eeip3[$i]}->ConnectionStatus->_value=='Connected') En uso
 @else Desconectado
 @endif<br>
     <br>
     <h2>Datos Tecnicos</h2>
-    Velocidad Bajada: {{ $obj[0]->InternetGatewayDevice->WANDevice->{$ee[$i]}->WANDSLInterfaceConfig->DownstreamCurrRate->_value }}<br>
-    Velocidad Subida: {{ $obj[0]->InternetGatewayDevice->WANDevice->{$ee[$i]}->WANDSLInterfaceConfig->UpstreamCurrRate->_value }}<br>
-    SNR Bajada: {{ $obj[0]->InternetGatewayDevice->WANDevice->{$ee[$i]}->WANDSLInterfaceConfig->SNRMpbds->_value }}<br>
-    SNR Subida: {{ $obj[0]->InternetGatewayDevice->WANDevice->{$ee[$i]}->WANDSLInterfaceConfig->SNRMpbus->_value }}<br>
-    Atenuacion Bajada: {{ $obj[0]->InternetGatewayDevice->WANDevice->{$ee[$i]}->WANDSLInterfaceConfig->DownstreamAttenuation->_value }}<br>
-    Atenuacion Subida: {{ $obj[0]->InternetGatewayDevice->WANDevice->{$ee[$i]}->WANDSLInterfaceConfig->UpstreamAttenuation->_value }}<br>
+    Velocidad Bajada: {{ $obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANDSLInterfaceConfig->DownstreamCurrRate->_value }}<br>
+    Velocidad Subida: {{ $obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANDSLInterfaceConfig->UpstreamCurrRate->_value }}<br>
+    SNR Bajada: {{ $obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANDSLInterfaceConfig->SNRMpbds->_value }}<br>
+    SNR Subida: {{ $obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANDSLInterfaceConfig->SNRMpbus->_value }}<br>
+    Atenuacion Bajada: {{ $obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANDSLInterfaceConfig->DownstreamAttenuation->_value }}<br>
+    Atenuacion Subida: {{ $obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANDSLInterfaceConfig->UpstreamAttenuation->_value }}<br>
 <?php
     }
     }

@@ -55,11 +55,23 @@ class CpeController extends Controller
                 break;
             }
         }
+
+        $i=0;
+        $link = mysqli_connect( "172.21.22.136", "norah3","Norah123", "sistemas" )or( "Error :" . mysqli_error( $link ) );
+
+        $lia1=mysqli_query($link,"SELECT * FROM activos_ports WHERE ctto=".$ctto);
+        while ( $reg1 = mysqli_fetch_array( $lia1 ) ) {
+            $nodo[$i] = $reg1[ 'nodo' ];
+            $i++;
+        }
+        $co = count($nodo);
+
         if($f==0) {
             $modemcpe = new ModemCPE();
             $modemcpe->serial = $ser;
             $modemcpe->contrato = $ctto;
             $modemcpe->telefono = $telf;
+            $modemcpe->nodo = $nodo[0];
             $modemcpe->save();
         }
 
