@@ -7,8 +7,8 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading my-2">CPEs activos e inactivos</div>
-                    <div class="col-lg-8">
+                    <div class="panel-heading my-2">CPEs inactivos por nodos</div>
+                    <div class="col-lg-10">
                         <canvas id="userChart" class="rounded shadow"></canvas>
                     </div>
                 </div>
@@ -27,7 +27,7 @@
         var ctx = document.getElementById('userChart').getContext('2d');
         var chart = new Chart(ctx, {
             // The type of chart we want to create
-            type: 'bar',
+            type: 'pie',
 // The data for our dataset
             data: {
                 labels:  {!!json_encode($chart->labels)!!} ,
@@ -41,36 +41,17 @@
             },
 // Configuration options go here
             options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true,
-                            callback: function(value) {if (value % 1 === 0) {return value;}}
-                        },
-                        scaleLabel: {
-                            display: false
-                        }
-                    }]
-                },
-                legend: {
-                    labels: {
-                        // This more specific font property overrides the global property
-                        fontColor: '#122C4B',
-                        fontFamily: "'Muli', sans-serif",
-                        padding: 25,
-                        boxWidth: 25,
-                        fontSize: 14,
-                    }
-                },
-                layout: {
-                    padding: {
-                        left: 10,
-                        right: 10,
-                        top: 0,
-                        bottom: 10
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Chart.js Pie Chart'
                     }
                 }
-            }
+            },
         });
     </script>
 @endsection

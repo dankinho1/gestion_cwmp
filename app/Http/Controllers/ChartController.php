@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Chart;
+use App\Models\ModemCPE;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -125,39 +126,69 @@ class ChartController extends Controller
     public function nodos()
     {
         //
-        // Get users grouped by age
+        //
+        $i=0;
+        $link = mysqli_connect( "172.21.22.136", "norah3","Norah123", "soia" )or( "Error :" . mysqli_error( $link ) );
+
+        $lia1=mysqli_query($link,"SELECT * FROM nodos");
+        while ( $reg1 = mysqli_fetch_array( $lia1 ) ) {
+            $nodo[$i] = $reg1[ 'nodoid' ];
+            $i++;
+        }
+        $co = count($nodo);
+
         $groups = DB::table('users')
             ->select('roles_id', DB::raw('count(*) as total'))
             ->groupBy('roles_id')
             ->pluck('total', 'roles_id')->all();
         $act = array(0 => 'activos', 1 => 'inactivos');
 
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://".$this->mainip.":7557/devices?projection=_lastInform");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        $output = curl_exec($ch);
-        curl_close($ch);
-        $obj = json_decode($output);
-        $objl = count($obj);
+        $modemcpe = new ModemCPE();
+        $u = ModemCPE::all();
+        $l = count($u);
+        echo $co;
+
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, "http://" . $this->mainip . ":7557/devices?projection=_lastInform,_deviceId._SerialNumber");
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            $output = curl_exec($ch);
+            curl_close($ch);
+            $obj = json_decode($output);
+            $objl = count($obj);
+        for($i=0;$i<$l;$i++) {
+            $act[$u[$i]->nodo]=0;
+            for($j=0;$j<$objl;$j++) {
+                if ($u[$i]->serial == $obj[$j]->_deviceId->_SerialNumber) {
+                    $lv[$i] = $obj[$j]->_lastInform;
+                }
+            }
+        }
+
         $inf[0] = 0;
-        $inf[1] = 0;
-        for($i=0;$i<$objl;$i++) {
-            $lidate = date('Y-m-d H:i:s', strtotime($obj[$i]->_lastInform));
+        for($i=0;$i<$l;$i++) {
+            $lidate = date('Y-m-d H:i:s', strtotime($lv[$i]));
             $now2 = \Carbon\Carbon::now()->subMinutes(30);
             if ($lidate >= $now2) {
                 $inf[0] = $inf[0] + 1;
-            } else {
-                $inf[1] = $inf[1] + 1;
+           // } else {
+                for($k=0;$k<$co;$k++) {
+                    $inf[$k] = 0;
+                    for($j=0;$j<$l;$j++) {
+                        if ($nodo[$k]==$u[$j]->nodo) {
+                            $inf[$k] = $inf[$k] + 1;
+                        }
+                    }
+                }
             }
         }
 
 // Generate random colours for the groups
-        for ($i=0; $i<=count($groups); $i++) {
+        for ($i=0; $i<=$co; $i++) {
             $colours[] = '#' . substr(str_shuffle('ABCDEF0123456789'), 0, 6);
         }
 // Prepare the data for returning with the view
         $chart = new Chart;
-        $chart->labels = ($act);
+        $chart->labels = ($nodo);
         $chart->dataset = ($inf);
         $chart->colours = $colours;
         return view('charts.nodos', compact('chart'));
