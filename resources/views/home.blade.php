@@ -124,7 +124,7 @@
                     </div>
                     <div class="tab-pane fade" id="registrarcpe" role="tabpanel" aria-labelledby="registrarcpe-tab">
                         <center>
-                        <table data-toggle="table">
+                        <table>
                             <thead>
                             <tr>
                                 <th>Serial</th>

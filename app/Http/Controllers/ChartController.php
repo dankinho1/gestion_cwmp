@@ -37,7 +37,7 @@ class ChartController extends Controller
         $inf[1] = 0;
         for($i=0;$i<$objl;$i++) {
             $lidate = date('Y-m-d H:i:s', strtotime($obj[$i]->_lastInform));
-            $now2 = \Carbon\Carbon::now()->subMinutes(30);
+            $now2 = \Carbon\Carbon::now()->subMinutes(10);
             if ($lidate >= $now2) {
                 $inf[0] = $inf[0] + 1;
             } else {
@@ -164,20 +164,15 @@ class ChartController extends Controller
             }
         }
 
-        $inf[0] = 0;
-        for($i=0;$i<$l;$i++) {
-            $lidate = date('Y-m-d H:i:s', strtotime($lv[$i]));
-            $now2 = \Carbon\Carbon::now()->subMinutes(30);
-            if ($lidate >= $now2) {
-                $inf[0] = $inf[0] + 1;
-           // } else {
-                for($k=0;$k<$co;$k++) {
-                    $inf[$k] = 0;
-                    for($j=0;$j<$l;$j++) {
-                        if ($nodo[$k]==$u[$j]->nodo) {
+        for($k=0;$k<$co;$k++) {
+            $inf[$k] = 0;
+            for($j=0;$j<$l;$j++) {
+                if ($nodo[$k]==$u[$j]->nodo) {
+                        $lidate = date('Y-m-d H:i:s', strtotime($lv[$j]));
+                        $now2 = \Carbon\Carbon::now()->subMinutes(10);
+                        if ($lidate < $now2) {
                             $inf[$k] = $inf[$k] + 1;
                         }
-                    }
                 }
             }
         }

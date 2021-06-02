@@ -142,8 +142,14 @@ class ReglaController extends Controller
 
     public function aregla()
     {
-
-        return view('reglas.aregla', ['id' => 0]);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "http://".$this->mainip.":7557/provisions/");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $output = curl_exec($ch);
+        curl_close($ch);
+        $obj2 = json_decode($output);
+        $l2 = count($obj2);
+        return view('reglas.aregla', ['id' => 0, 'obj2' => $obj2, 'l2' => $l2]);
     }
 
     public function store2(Request $request)

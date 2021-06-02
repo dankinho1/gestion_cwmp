@@ -56,7 +56,15 @@
                                 <label for="regla" class="col-md-4 col-form-label text-md-right">{{ __('Regla') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="regla" type="text" class="form-control" name="regla">
+                                    <select name="regla" id="regla">
+                                    <?php
+                                    for($i=0;$i<$l2;$i++) {
+                                        ?>
+                                        <option value="{{ $obj2[$i]->_id }}">{{ $obj2[$i]->_id }}</option>
+                                    <?php
+                                    }
+                                    ?>
+                                    </select>
 
                                 </div>
                             </div>

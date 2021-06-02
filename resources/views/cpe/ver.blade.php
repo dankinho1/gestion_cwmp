@@ -28,7 +28,7 @@
                                     echo "<td>".$cpe->telefono."</td>";
                                     $u=1;
                                     break;
-                                }
+                                } else $u=0;
                             }
                             if($u!=1) {
                                 echo "<td style='color:red;'>No registrado</td>";
@@ -42,8 +42,16 @@
                             } else {
                                 echo "<td style='color:red;'>Inactivo</td>";
                             }
-                            echo "<td><form action='".route('verpar')."' method='POST' role='form'>".csrf_field()."<input type='hidden' id='id' name='id' value='".$obj[$i]->_id."'><input type='hidden' id='ser' name='ser' value='".$obj[$i]->_deviceId->_SerialNumber."'><button type='submit' class='btn btn-outline-primary'>Ver Parametros</button></form></td>
-                            <td><form action='".route('modpar')."' method='POST' role='form'>".csrf_field()."<input type='hidden' id='id' name='id' value='".$obj[$i]->_id."'><input type='hidden' id='ser' name='ser' value='".$obj[$i]->_deviceId->_SerialNumber."'><button type='submit' class='btn btn-outline-primary'>Modificar Parametros</button></form></td>";
+                            echo "<td><form onsubmit='";
+                            if ($lidate < $now2) {
+                                echo "nocpe(); return false; ";
+                            }
+                            echo "' action='".route('verpar')."' method='POST' role='form'>".csrf_field()."<input type='hidden' id='id' name='id' value='".$obj[$i]->_id."'><input type='hidden' id='ser' name='ser' value='".$obj[$i]->_deviceId->_SerialNumber."'><button type='submit' class='btn btn-outline-primary'>Ver Parametros</button></form></td>";
+                            echo "<td><form onsubmit='";
+                            if ($lidate < $now2) {
+                                echo "nocpe(); return false; ";
+                            }
+                            echo "' action='".route('modpar')."' method='POST' role='form'>".csrf_field()."<input type='hidden' id='id' name='id' value='".$obj[$i]->_id."'><input type='hidden' id='ser' name='ser' value='".$obj[$i]->_deviceId->_SerialNumber."'><button type='submit' class='btn btn-outline-primary'>Modificar Parametros</button></form></td>";
                             echo "</tr>";
                         }
                         ?>
@@ -55,4 +63,10 @@
             <a type="button" href="{{ route('home') }}" class="btn btn-outline-primary">Pagina Principal</a><br>
         </div>
     </div>
+
+    <script>
+        function nocpe() {
+            alert('CPE no esta activo');
+        }
+    </script>
 @endsection
