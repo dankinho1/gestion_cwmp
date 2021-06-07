@@ -35,6 +35,9 @@ Route::post('/verpar', 'App\Http\Controllers\ParametrosController@verpar')->name
 Route::post('/modpar', 'App\Http\Controllers\ParametrosController@modpar')->name('modpar');
 Route::post('/rein', 'App\Http\Controllers\ReinicioController@reinicio')->name('reinicio');
 Route::post('/refa', 'App\Http\Controllers\ReinicioController@factoryreset')->name('factoryreset');
+Route::post('/ping', 'App\Http\Controllers\ReinicioController@ping')->name('ping');
+Route::post('/pings', 'App\Http\Controllers\ReinicioController@pings')->name('pings');
+Route::post('/pingb', 'App\Http\Controllers\ReinicioController@pingb')->name('pingb');
 
 Route::resource('parametros', 'App\Http\Controllers\ParametrosController');
 Route::resource('regcpe', 'App\Http\Controllers\CpeController');

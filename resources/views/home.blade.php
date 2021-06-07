@@ -113,6 +113,14 @@
                                     <button type="submit" class="btn btn-outline-primary">Actualizar CPE</button>
                                 </form>
                             </td>
+                                <td>
+                                    <form action='{{ route('ping') }}' method='POST' role='form'>
+                                        {{ csrf_field() }}
+                                        <input type='hidden' id='idd' name='idd' value='{{ $obj[$i]->_id }}'>
+                                        <input type='hidden' id='se' name='se' value='{{ $obj[$i]->_deviceId->_SerialNumber }}'>
+                                        <button type="submit" class="btn btn-outline-primary">Prueba Ping</button>
+                                    </form>
+                                </td>
                             </tr>
                             <?php
                                 }
