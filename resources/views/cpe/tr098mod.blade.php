@@ -23,6 +23,7 @@
     }
     ?>
     <br>
+    <h2>Wi-Fi</h2>
     <form action='{{ route('parametros.store') }}' method='POST' role='form'>
         {{ csrf_field() }}
         SSID: <input type="text" id="ssid" name="ssid" value="{{ $obj[0]->InternetGatewayDevice->LANDevice->{1}->WLANConfiguration->{1}->SSID->_value }}"><br>
@@ -37,4 +38,69 @@
         <input type='hidden' id='id' name='id' value='{{ $obj[0]->_id }}'>
         <button type='submit' class='btn btn-outline-primary'>Cambiar</button>
     </form>
+
+    <h2>Conexiones WAN</h2>
+    <?php
+    if(isset($eel)) {
+    for($i=0; $i<$eel;$i++) {
+    ?>
+    <h3>Conexion {{ $ee3[$i] }}</h3>
+    Red WAN PPPoE {{ $ee3[$i] }}: {{ $obj[0]->InternetGatewayDevice->WANDevice->{$ee[$i]}->WANConnectionDevice->{$ee2[$i]}->WANPPPConnection->{$ee3[$i]}->Name->_value }}<br>
+    Estado: @if($obj[0]->InternetGatewayDevice->WANDevice->{$ee[$i]}->WANConnectionDevice->{$ee2[$i]}->WANPPPConnection->{$ee3[$i]}->ConnectionStatus->_value=='Connected') En uso
+    @else Desconectado
+    @endif<br>
+    <?php
+    }
+    }
+    if(isset($eeipl)) {
+    for($i=0; $i<$eeipl;$i++) {
+    ?>
+    <h3>Conexion {{ $i+1 }}</h3>
+    Red WAN IP {{ $eeip3[$i] }}: {{ $obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANConnectionDevice->{$eeip2[$i]}->WANIPConnection->{$eeip3[$i]}->Name->_value }}<br>
+
+    <form action='{{ route('parametros.store') }}' method='POST' role='form'>
+        {{ csrf_field() }}
+        Direccion IP: <input type="text" id="dip" name="dip" value="{{ $obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANConnectionDevice->{$eeip2[$i]}->WANIPConnection->{$eeip3[$i]}->ExternalIPAddress->_value }}"><br>
+        <input type='hidden' id='v11' name='v11' value='{{ $eeip[$i] }}'>
+        <input type='hidden' id='v12' name='v12' value='{{ $eeip2[$i] }}'>
+        <input type='hidden' id='v13' name='v13' value='{{ $eeip3[$i] }}'>
+        <input type='hidden' id='ser' name='ser' value='{{ $obj[0]->_deviceId->_SerialNumber }}'>
+        <input type='hidden' id='id' name='id' value='{{ $obj[0]->_id }}'>
+        <button type='submit' class='btn btn-outline-primary'>Cambiar</button>
+    </form>
+
+    <form action='{{ route('parametros.store') }}' method='POST' role='form'>
+        {{ csrf_field() }}
+        Gateway: <input type="text" id="dga" name="dga" value="{{ $obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANConnectionDevice->{$eeip2[$i]}->WANIPConnection->{$eeip3[$i]}->DefaultGateway->_value }}"><br>
+        <input type='hidden' id='v11' name='v11' value='{{ $eeip[$i] }}'>
+        <input type='hidden' id='v12' name='v12' value='{{ $eeip2[$i] }}'>
+        <input type='hidden' id='v13' name='v13' value='{{ $eeip3[$i] }}'>
+        <input type='hidden' id='ser' name='ser' value='{{ $obj[0]->_deviceId->_SerialNumber }}'>
+        <input type='hidden' id='id' name='id' value='{{ $obj[0]->_id }}'>
+        <button type='submit' class='btn btn-outline-primary'>Cambiar</button>
+    </form>
+
+    <form action='{{ route('parametros.store') }}' method='POST' role='form'>
+        {{ csrf_field() }}
+        DNS: <input type="text" id="ddns" name="ddns" value="{{ $obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANConnectionDevice->{$eeip2[$i]}->WANIPConnection->{$eeip3[$i]}->DNSServers->_value }}"><br>
+        <input type='hidden' id='v11' name='v11' value='{{ $eeip[$i] }}'>
+        <input type='hidden' id='v12' name='v12' value='{{ $eeip2[$i] }}'>
+        <input type='hidden' id='v13' name='v13' value='{{ $eeip3[$i] }}'>
+        <input type='hidden' id='ser' name='ser' value='{{ $obj[0]->_deviceId->_SerialNumber }}'>
+        <input type='hidden' id='id' name='id' value='{{ $obj[0]->_id }}'>
+        <button type='submit' class='btn btn-outline-primary'>Cambiar</button>
+    </form>
+
+    NAT: @if($obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANConnectionDevice->{$eeip2[$i]}->WANIPConnection->{$eeip3[$i]}->NATEnabled->_value=='1') Habilitado
+    @else Desconectado
+    @endif<br>
+    Estado: @if($obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANConnectionDevice->{$eeip2[$i]}->WANIPConnection->{$eeip3[$i]}->ConnectionStatus->_value=='Connected') En uso
+    @else Desconectado
+    @endif<br>
+    <br>
+    --------------------------------------------------------------------------<br><br>
+    <?php
+    }
+    }
+    ?>
 @endsection

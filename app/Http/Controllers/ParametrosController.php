@@ -40,6 +40,8 @@ class ParametrosController extends Controller
         $id = $request->id;
         $id = str_replace("%","%25",$id);
         $se = $request->ser;
+
+        //Parametros TR-181
         if(isset($request->ct)) {
             $ct = $request->ct;
             $ct2 = $request->ct2;
@@ -58,6 +60,8 @@ class ParametrosController extends Controller
         echo $se;
         echo $vp;
         //echo $ssid;
+
+        //Parametros TR-098
         if(isset($request->ssid)) {
             $ssid = $request->ssid;
             $post = '{"name":"setParameterValues", "parameterValues":[["InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.SSID", "'.$ssid.'", "xsd:string"], ["InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.X_BROADCOM_COM_WlanAdapter.WlVirtIntfCfg.1.WlSsid", "A'.$ssid.'A", "xsd:string"]]}';
@@ -74,6 +78,54 @@ class ParametrosController extends Controller
         if(isset($request->passwlan)) {
             $passwlan = $request->passwlan;
             $post = '{"name":"setParameterValues", "parameterValues":[["InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.PreSharedKey.1.KeyPassphrase", "'.$passwlan.'", "xsd:string"], ["InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.X_BROADCOM_COM_WlanAdapter.WlVirtIntfCfg.1.WlWpaPsk", "A'.$passwlan.'A", "xsd:string"]]}';
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, "http://".$this->mainip.":7557/devices/".$id."/tasks?connection_request");
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+            $output = curl_exec($ch);
+            curl_close($ch);
+            $r = substr($output,0,-2);
+            $r = substr($r,2);
+            $objpost = json_decode($output);
+        }
+        if(isset($request->dip)) {
+            $dip = $request->dip;
+            $v11 = $request->v11;
+            $v12 = $request->v12;
+            $v13 = $request->v13;
+            $post = '{"name":"setParameterValues", "parameterValues":[["InternetGatewayDevice.WANDevice.'.$v11.'.WANConnectionDevice.'.$v12.'.WANIPConnection.'.$v13.'.ExternalIPAddress", "'.$dip.'", "xsd:string"]]}';
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, "http://".$this->mainip.":7557/devices/".$id."/tasks?connection_request");
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+            $output = curl_exec($ch);
+            curl_close($ch);
+            $r = substr($output,0,-2);
+            $r = substr($r,2);
+            $objpost = json_decode($output);
+        }
+        if(isset($request->dga)) {
+            $dga = $request->dga;
+            $v11 = $request->v11;
+            $v12 = $request->v12;
+            $v13 = $request->v13;
+            $post = '{"name":"setParameterValues", "parameterValues":[["InternetGatewayDevice.WANDevice.'.$v11.'.WANConnectionDevice.'.$v12.'.WANIPConnection.'.$v13.'.DefaultGateway", "'.$dga.'", "xsd:string"]]}';
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, "http://".$this->mainip.":7557/devices/".$id."/tasks?connection_request");
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+            $output = curl_exec($ch);
+            curl_close($ch);
+            $r = substr($output,0,-2);
+            $r = substr($r,2);
+            $objpost = json_decode($output);
+        }
+        if(isset($request->ddns)) {
+            $ddns = $request->ddns;
+            $v11 = $request->v11;
+            $v12 = $request->v12;
+            $v13 = $request->v13;
+            $post = '{"name":"setParameterValues", "parameterValues":[["InternetGatewayDevice.WANDevice.'.$v11.'.WANConnectionDevice.'.$v12.'.WANIPConnection.'.$v13.'.DNSServers", "'.$ddns.'", "xsd:string"]]}';
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, "http://".$this->mainip.":7557/devices/".$id."/tasks?connection_request");
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -206,9 +258,9 @@ class ParametrosController extends Controller
                     $oo++;
                 }
                 if (isset($obj[$o]->InternetGatewayDevice->WANDevice->{$ii}->WANConnectionDevice->{$jj}->WANIPConnection->{$kk})) {
-                    $eeip[$oo] = $ii;
-                    $eeip2[$oo2] = $jj;
-                    $eeip3[$oo3] = $kk;
+                    $eeip[$ooip] = $ii;
+                    $eeip2[$ooip2] = $jj;
+                    $eeip3[$ooip3] = $kk;
                     $ooip2++;
                     $ooip3++;
                     $ooip++;
@@ -218,7 +270,7 @@ class ParametrosController extends Controller
         }
             $o++;
         }
-        //print_r($ee2);
+        //print_r($ooip);
         if($obj) {
             if(isset($ee)) $eel = count($ee);
             else {
@@ -330,11 +382,6 @@ class ParametrosController extends Controller
                 $ee2 = 0;
                 $ee3 = 0;
             }
-            if (isset($eeip)) $eeipl = count($eeip);
-            else {
-                $eeipl = 0;
-                $eeip = 0;
-            }
         }
         if(!$obj) {
             echo "OBJ2 EX";
@@ -361,7 +408,33 @@ class ParametrosController extends Controller
         }
         if(!$obj2) {
             echo "OBJ1 EX";
-            return view('cpe.tr098mod', ['id' => $r, 'obj' => $obj, 'l' => $l, 'ee' => $ee, 'ee2' => $ee2, 'ee3' => $ee3, 'eel' => $eel]);
+            $o=0;
+            $ooip=0;
+            $ooip2=0;
+            $ooip3=0;
+            while($o<$l) {
+                for ($ii=1; $ii<=10; $ii++) {
+                    for ($jj=1; $jj<=10; $jj++) {
+                        for ($kk = 1; $kk <= 10; $kk++) {
+                            if (isset($obj[$o]->InternetGatewayDevice->WANDevice->{$ii}->WANConnectionDevice->{$jj}->WANIPConnection->{$kk})) {
+                                $eeip[$ooip] = $ii;
+                                $eeip2[$ooip2] = $jj;
+                                $eeip3[$ooip3] = $kk;
+                                $ooip2++;
+                                $ooip3++;
+                                $ooip++;
+                            }
+                        }
+                    }
+                }
+                $o++;
+            }
+            if (isset($eeip)) $eeipl = count($eeip);
+            else {
+                $eeipl = 0;
+                $eeip = 0;
+            }
+            return view('cpe.tr098mod', ['id' => $r, 'obj' => $obj, 'l' => $l, 'ee' => $ee, 'ee2' => $ee2, 'ee3' => $ee3, 'eel' => $eel, 'eeip' => $eeip, 'eeip2' => $eeip2, 'eeip3' => $eeip3, 'eeipl' => $eeipl]);
         }
     }
 }

@@ -19,6 +19,7 @@
                         </thead>
                         <tbody>
                         <?php
+                            $u=0;
                         for ($i=0; $i<$l; $i++) {
                             echo "<tr>";
                             echo "<td>".$obj[$i]->_deviceId->_SerialNumber."</td>";
@@ -34,7 +35,6 @@
                                 echo "<td style='color:red;'>No registrado</td>";
                                 echo "<td style='color:red;'>No registrado</td>";
                             }
-                            $u=0;
                             $lidate = date('Y-m-d H:i:s', strtotime($obj[$i]->_lastInform));
                             $now2 = \Carbon\Carbon::now()->subMinutes(10);
                             if ($lidate >= $now2) {
@@ -51,8 +51,12 @@
                             if ($lidate < $now2) {
                                 echo "nocpe(); return false; ";
                             }
+                            if($u!=1) {
+                                echo "noreg(); return false; ";
+                            }
                             echo "' action='".route('modpar')."' method='POST' role='form'>".csrf_field()."<input type='hidden' id='id' name='id' value='".$obj[$i]->_id."'><input type='hidden' id='ser' name='ser' value='".$obj[$i]->_deviceId->_SerialNumber."'><button type='submit' class='btn btn-outline-primary'>Modificar Parametros</button></form></td>";
                             echo "</tr>";
+                            $u=0;
                         }
                         ?>
                         </tbody>
@@ -67,6 +71,10 @@
     <script>
         function nocpe() {
             alert('CPE no esta activo');
+        }
+
+        function noreg() {
+            alert('CPE no esta registrado');
         }
     </script>
 @endsection

@@ -16,9 +16,10 @@ Tiempo desde el ultimo reinicio: {{ $obj[0]->InternetGatewayDevice->DeviceInfo->
 <br>
     <h2>Conexiones WAN</h2>
 <?php
-if(isset($eeipl)) {
+if(isset($eel)) {
     for($i=0; $i<$eel;$i++) {
 ?>
+    <h3>Conexion {{ $ee3[$i] }}</h3>
 Red WAN PPPoE {{ $ee3[$i] }}: {{ $obj[0]->InternetGatewayDevice->WANDevice->{$ee[$i]}->WANConnectionDevice->{$ee2[$i]}->WANPPPConnection->{$ee3[$i]}->Name->_value }}<br>
 Estado: @if($obj[0]->InternetGatewayDevice->WANDevice->{$ee[$i]}->WANConnectionDevice->{$ee2[$i]}->WANPPPConnection->{$ee3[$i]}->ConnectionStatus->_value=='Connected') En uso
 @else Desconectado
@@ -29,18 +30,30 @@ Estado: @if($obj[0]->InternetGatewayDevice->WANDevice->{$ee[$i]}->WANConnectionD
     if(isset($eeipl)) {
     for($i=0; $i<$eeipl;$i++) {
 ?>
+    <h3>Conexion {{ $i+1 }}</h3>
     Red WAN IP {{ $eeip3[$i] }}: {{ $obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANConnectionDevice->{$eeip2[$i]}->WANIPConnection->{$eeip3[$i]}->Name->_value }}<br>
+    Direccion IP: {{ $obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANConnectionDevice->{$eeip2[$i]}->WANIPConnection->{$eeip3[$i]}->ExternalIPAddress->_value }}<br>
+    Gateway: {{ $obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANConnectionDevice->{$eeip2[$i]}->WANIPConnection->{$eeip3[$i]}->DefaultGateway->_value }}<br>
+    DNS: {{ $obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANConnectionDevice->{$eeip2[$i]}->WANIPConnection->{$eeip3[$i]}->DNSServers->_value }}<br>
+    NAT: @if($obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANConnectionDevice->{$eeip2[$i]}->WANIPConnection->{$eeip3[$i]}->NATEnabled->_value=='1') Habilitado
+    @else Desconectado
+    @endif<br>
     Estado: @if($obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANConnectionDevice->{$eeip2[$i]}->WANIPConnection->{$eeip3[$i]}->ConnectionStatus->_value=='Connected') En uso
 @else Desconectado
 @endif<br>
     <br>
     <h2>Datos Tecnicos</h2>
+    Estado conexion fisica: {{ $obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANCommonInterfaceConfig->PhysicalLinkStatus->_value }}<br>
+    Tipo de Conexion: {{ $obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANCommonInterfaceConfig->WANAccessType->_value }}<br>
+    Direccion MAC: {{ $obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANEthernetInterfaceConfig->MACAddress->_value }}<br>
+    Tipo de Modulacion: {{ $obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANDSLInterfaceConfig->ModulationType->_value }}<br>
     Velocidad Bajada: {{ $obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANDSLInterfaceConfig->DownstreamCurrRate->_value }}<br>
     Velocidad Subida: {{ $obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANDSLInterfaceConfig->UpstreamCurrRate->_value }}<br>
     SNR Bajada: {{ $obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANDSLInterfaceConfig->SNRMpbds->_value }}<br>
     SNR Subida: {{ $obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANDSLInterfaceConfig->SNRMpbus->_value }}<br>
     Atenuacion Bajada: {{ $obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANDSLInterfaceConfig->DownstreamAttenuation->_value }}<br>
     Atenuacion Subida: {{ $obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANDSLInterfaceConfig->UpstreamAttenuation->_value }}<br>
+    --------------------------------------------------------------------------<br><br>
 <?php
     }
     }
