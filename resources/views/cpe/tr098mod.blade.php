@@ -44,8 +44,31 @@
     if(isset($eel)) {
     for($i=0; $i<$eel;$i++) {
     ?>
-    <h3>Conexion {{ $ee3[$i] }}</h3>
+    <h3>Conexion PPP {{ $ee3[$i] }}</h3>
     Red WAN PPPoE {{ $ee3[$i] }}: {{ $obj[0]->InternetGatewayDevice->WANDevice->{$ee[$i]}->WANConnectionDevice->{$ee2[$i]}->WANPPPConnection->{$ee3[$i]}->Name->_value }}<br>
+
+    <form action='{{ route('parametros.store') }}' method='POST' role='form'>
+        {{ csrf_field() }}
+        Direccion IP: <input type="text" id="dip" name="dip" value="{{ $obj[0]->InternetGatewayDevice->WANDevice->{$ee[$i]}->WANConnectionDevice->{$ee2[$i]}->WANPPPConnection->{$ee3[$i]}->ExternalIPAddress->_value }}"><br>
+        <input type='hidden' id='v11' name='v11' value='{{ $ee[$i] }}'>
+        <input type='hidden' id='v12' name='v12' value='{{ $ee2[$i] }}'>
+        <input type='hidden' id='v13' name='v13' value='{{ $ee3[$i] }}'>
+        <input type='hidden' id='ser' name='ser' value='{{ $obj[0]->_deviceId->_SerialNumber }}'>
+        <input type='hidden' id='id' name='id' value='{{ $obj[0]->_id }}'>
+        <button type='submit' class='btn btn-outline-primary'>Cambiar</button>
+    </form>
+
+    <form action='{{ route('parametros.store') }}' method='POST' role='form'>
+        {{ csrf_field() }}
+        DNS: <input type="text" id="ddns" name="ddns" value="{{ $obj[0]->InternetGatewayDevice->WANDevice->{$ee[$i]}->WANConnectionDevice->{$ee2[$i]}->WANPPPConnection->{$ee3[$i]}->DNSServers->_value }}"><br>
+        <input type='hidden' id='v11' name='v11' value='{{ $ee[$i] }}'>
+        <input type='hidden' id='v12' name='v12' value='{{ $ee2[$i] }}'>
+        <input type='hidden' id='v13' name='v13' value='{{ $ee3[$i] }}'>
+        <input type='hidden' id='ser' name='ser' value='{{ $obj[0]->_deviceId->_SerialNumber }}'>
+        <input type='hidden' id='id' name='id' value='{{ $obj[0]->_id }}'>
+        <button type='submit' class='btn btn-outline-primary'>Cambiar</button>
+    </form>
+
     Estado: @if($obj[0]->InternetGatewayDevice->WANDevice->{$ee[$i]}->WANConnectionDevice->{$ee2[$i]}->WANPPPConnection->{$ee3[$i]}->ConnectionStatus->_value=='Connected') En uso
     @else Desconectado
     @endif<br>
@@ -55,7 +78,7 @@
     if(isset($eeipl)) {
     for($i=0; $i<$eeipl;$i++) {
     ?>
-    <h3>Conexion {{ $i+1 }}</h3>
+    <h3>Conexion IP {{ $i+1 }}</h3>
     Red WAN IP {{ $eeip3[$i] }}: {{ $obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANConnectionDevice->{$eeip2[$i]}->WANIPConnection->{$eeip3[$i]}->Name->_value }}<br>
 
     <form action='{{ route('parametros.store') }}' method='POST' role='form'>

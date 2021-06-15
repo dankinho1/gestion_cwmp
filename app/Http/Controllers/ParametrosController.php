@@ -261,6 +261,30 @@ class ParametrosController extends Controller
                     $eeip[$ooip] = $ii;
                     $eeip2[$ooip2] = $jj;
                     $eeip3[$ooip3] = $kk;
+
+                    if (!isset($obj[$o]->InternetGatewayDevice->WANDevice->{$ii}->WANConnectionDevice->{$jj}->WANIPConnection->{$kk}->Name->_value)) {
+                        echo "UPDATING";
+                        $post = '{"name": "refreshObject", "objectName": "InternetGatewayDevice.WANDevice.'.$ii.'"}';
+                        $ch = curl_init();
+                        curl_setopt($ch, CURLOPT_URL, "http://" . $this->mainip . ":7557/devices/" . $id . "/tasks?timeout=3000&connection_request");
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                        curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+                        $output = curl_exec($ch);
+                        curl_close($ch);
+                        $r = substr($output, 0, -2);
+                        $r = substr($r, 2);
+                        $objpost = json_decode($output);
+
+                        $ch = curl_init();
+                        curl_setopt($ch, CURLOPT_URL, "http://".$this->mainip.":7557/devices/?query=%7B%22InternetGatewayDevice.DeviceInfo.SerialNumber%22%3A%22".$se."%22%7D");
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                        $output = curl_exec($ch);
+                        curl_close($ch);
+                        $r = substr($output,0,-2);
+                        $r = substr($r,2);
+                        $obj = json_decode($output);
+                    }
+
                     $ooip2++;
                     $ooip3++;
                     $ooip++;
@@ -287,11 +311,45 @@ class ParametrosController extends Controller
         }
         if(!$obj) {
             echo "OBJ2 EX";
+
             return view('cpe.tr143', ['id' => $r, 'obj' => $obj2, 'l' => $l2]);
         }
         if(!$obj2) {
             echo "OBJ1 EX";
-            return view('cpe.tr098', ['id' => $r, 'obj' => $obj, 'l' => $l, 'ee' => $ee, 'ee2' => $ee2, 'ee3' => $ee3, 'eel' => $eel, 'eeip' => $eeip, 'eeip2' => $eeip2, 'eeip3' => $eeip3, 'eeipl' => $eeipl]);
+
+            $post = '{"name": "refreshObject", "objectName": "InternetGatewayDevice.LANDevice.1.Hosts.Host"}';
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, "http://".$this->mainip.":7557/devices/".$id."/tasks?timeout=3000&connection_request");
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+            $output = curl_exec($ch);
+            curl_close($ch);
+            $r = substr($output,0,-2);
+            $r = substr($r,2);
+            $objactt = json_decode($output);
+
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, "http://".$this->mainip.":7557/devices/?query=%7B%22InternetGatewayDevice.DeviceInfo.SerialNumber%22%3A%22".$se."%22%7D&projection=InternetGatewayDevice.LANDevice.1.Hosts.Host");
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            $output = curl_exec($ch);
+            curl_close($ch);
+            $r = substr($output,0,-2);
+            $r = substr($r,2);
+            $objhost = json_decode($output);
+            $nhost = $objhost[0]->InternetGatewayDevice->LANDevice->{1}->Hosts->Host;
+            $ar = json_decode(json_encode($nhost), true);
+            $lhost = count($ar);
+            $u=0;
+            for($i=0;$i<1000;$i++) {
+                if(isset($ar[$i])) {
+                    $ho[$u]=$ar[$i];
+                    $hov[$u]=$i;
+                    $u++;
+                }
+            }
+            $lho=count($ho);
+
+            return view('cpe.tr098', ['id' => $r, 'obj' => $obj, 'l' => $l, 'ho' => $ho, 'hov' => $hov, 'lho' => $lho, 'ee' => $ee, 'ee2' => $ee2, 'ee3' => $ee3, 'eel' => $eel, 'eeip' => $eeip, 'eeip2' => $eeip2, 'eeip3' => $eeip3, 'eeipl' => $eeipl]);
         }
     }
 
@@ -437,4 +495,5 @@ class ParametrosController extends Controller
             return view('cpe.tr098mod', ['id' => $r, 'obj' => $obj, 'l' => $l, 'ee' => $ee, 'ee2' => $ee2, 'ee3' => $ee3, 'eel' => $eel, 'eeip' => $eeip, 'eeip2' => $eeip2, 'eeip3' => $eeip3, 'eeipl' => $eeipl]);
         }
     }
+
 }
