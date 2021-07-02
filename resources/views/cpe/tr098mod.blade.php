@@ -33,7 +33,20 @@
     </form>
     <form action='{{ route('parametros.store') }}' method='POST' role='form'>
         {{ csrf_field() }}
-        Password Wi-Fi: <input type="text" id="passwlan" name="passwlan" value="{{ $obj[0]->InternetGatewayDevice->LANDevice->{1}->WLANConfiguration->{1}->PreSharedKey->{1}->KeyPassphrase->_value }}"><br>
+        @if(isset($obj[0]->InternetGatewayDevice->LANDevice->{1}->WLANConfiguration->{1}->PreSharedKey->{1}->KeyPassphrase->_value))
+            Password Wi-Fi: <input type="text" id="passwlan" name="passwlan" value="{{ $obj[0]->InternetGatewayDevice->LANDevice->{1}->WLANConfiguration->{1}->PreSharedKey->{1}->KeyPassphrase->_value }}"><br>
+            <input type='hidden' id='idpass' name='idpass' value='1'>
+        @elseif(isset($obj[0]->InternetGatewayDevice->LANDevice->{1}->WLANConfiguration->{1}->X_TP_PreSharedKey->_value))
+            Password Wi-Fi: <input type="text" id="passwlan" name="passwlan" value="{{ $obj[0]->InternetGatewayDevice->LANDevice->{1}->WLANConfiguration->{1}->X_TP_PreSharedKey->_value }}"><br>
+            <input type='hidden' id='idpass' name='idpass' value='2'>
+        @endif
+        <input type='hidden' id='ser' name='ser' value='{{ $obj[0]->_deviceId->_SerialNumber }}'>
+        <input type='hidden' id='id' name='id' value='{{ $obj[0]->_id }}'>
+        <button type='submit' class='btn btn-outline-primary'>Cambiar</button>
+    </form>
+    <form action='{{ route('parametros.store') }}' method='POST' role='form'>
+        {{ csrf_field() }}
+        Canal: <input type="text" id="canwlan" name="canwlan" value="{{ $obj[0]->InternetGatewayDevice->LANDevice->{1}->WLANConfiguration->{1}->Channel->_value }}"><br>
         <input type='hidden' id='ser' name='ser' value='{{ $obj[0]->_deviceId->_SerialNumber }}'>
         <input type='hidden' id='id' name='id' value='{{ $obj[0]->_id }}'>
         <button type='submit' class='btn btn-outline-primary'>Cambiar</button>
@@ -49,7 +62,7 @@
 
     <form action='{{ route('parametros.store') }}' method='POST' role='form'>
         {{ csrf_field() }}
-        Direccion IP: <input type="text" id="dip" name="dip" value="{{ $obj[0]->InternetGatewayDevice->WANDevice->{$ee[$i]}->WANConnectionDevice->{$ee2[$i]}->WANPPPConnection->{$ee3[$i]}->ExternalIPAddress->_value }}"><br>
+        Direccion IP: <input type="text" id="dppp" name="dppp" value="{{ $obj[0]->InternetGatewayDevice->WANDevice->{$ee[$i]}->WANConnectionDevice->{$ee2[$i]}->WANPPPConnection->{$ee3[$i]}->ExternalIPAddress->_value }}"><br>
         <input type='hidden' id='v11' name='v11' value='{{ $ee[$i] }}'>
         <input type='hidden' id='v12' name='v12' value='{{ $ee2[$i] }}'>
         <input type='hidden' id='v13' name='v13' value='{{ $ee3[$i] }}'>
@@ -60,7 +73,29 @@
 
     <form action='{{ route('parametros.store') }}' method='POST' role='form'>
         {{ csrf_field() }}
-        DNS: <input type="text" id="ddns" name="ddns" value="{{ $obj[0]->InternetGatewayDevice->WANDevice->{$ee[$i]}->WANConnectionDevice->{$ee2[$i]}->WANPPPConnection->{$ee3[$i]}->DNSServers->_value }}"><br>
+        DNS: <input type="text" id="ddnsp" name="ddnsp" value="{{ $obj[0]->InternetGatewayDevice->WANDevice->{$ee[$i]}->WANConnectionDevice->{$ee2[$i]}->WANPPPConnection->{$ee3[$i]}->DNSServers->_value }}"><br>
+        <input type='hidden' id='v11' name='v11' value='{{ $ee[$i] }}'>
+        <input type='hidden' id='v12' name='v12' value='{{ $ee2[$i] }}'>
+        <input type='hidden' id='v13' name='v13' value='{{ $ee3[$i] }}'>
+        <input type='hidden' id='ser' name='ser' value='{{ $obj[0]->_deviceId->_SerialNumber }}'>
+        <input type='hidden' id='id' name='id' value='{{ $obj[0]->_id }}'>
+        <button type='submit' class='btn btn-outline-primary'>Cambiar</button>
+    </form>
+
+    <form action='{{ route('parametros.store') }}' method='POST' role='form'>
+        {{ csrf_field() }}
+        Cuenta PPPoE: <input type="text" id="cppp" name="cppp" value="{{ $obj[0]->InternetGatewayDevice->WANDevice->{$ee[$i]}->WANConnectionDevice->{$ee2[$i]}->WANPPPConnection->{$ee3[$i]}->Username->_value }}"><br>
+        <input type='hidden' id='v11' name='v11' value='{{ $ee[$i] }}'>
+        <input type='hidden' id='v12' name='v12' value='{{ $ee2[$i] }}'>
+        <input type='hidden' id='v13' name='v13' value='{{ $ee3[$i] }}'>
+        <input type='hidden' id='ser' name='ser' value='{{ $obj[0]->_deviceId->_SerialNumber }}'>
+        <input type='hidden' id='id' name='id' value='{{ $obj[0]->_id }}'>
+        <button type='submit' class='btn btn-outline-primary'>Cambiar</button>
+    </form>
+
+    <form action='{{ route('parametros.store') }}' method='POST' role='form'>
+        {{ csrf_field() }}
+        Password Cuenta PPPoE: <input type="text" id="pappp" name="pappp" value="{{ $obj[0]->InternetGatewayDevice->WANDevice->{$ee[$i]}->WANConnectionDevice->{$ee2[$i]}->WANPPPConnection->{$ee3[$i]}->Password->_value }}"><br>
         <input type='hidden' id='v11' name='v11' value='{{ $ee[$i] }}'>
         <input type='hidden' id='v12' name='v12' value='{{ $ee2[$i] }}'>
         <input type='hidden' id='v13' name='v13' value='{{ $ee3[$i] }}'>
@@ -71,7 +106,7 @@
 
     Estado: @if($obj[0]->InternetGatewayDevice->WANDevice->{$ee[$i]}->WANConnectionDevice->{$ee2[$i]}->WANPPPConnection->{$ee3[$i]}->ConnectionStatus->_value=='Connected') En uso
     @else Desconectado
-    @endif<br>
+    @endif<br><br>
     <?php
     }
     }

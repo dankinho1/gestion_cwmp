@@ -14,7 +14,9 @@
                             <th>Telefono</th>
                             <th>Estado</th>
                             <th>Opciones</th>
-                            <th></th>
+                            @if($id!=5)
+                                <th></th>
+                            @endif
                         </tr>
                         </thead>
                         <tbody>
@@ -36,7 +38,7 @@
                                 echo "<td style='color:red;'>No registrado</td>";
                             }
                             $lidate = date('Y-m-d H:i:s', strtotime($obj[$i]->_lastInform));
-                            $now2 = \Carbon\Carbon::now()->subMinutes(10);
+                            $now2 = \Carbon\Carbon::now()->subMinutes(5);
                             if ($lidate >= $now2) {
                                 echo "<td style='color:green;'>Activo</td>";
                             } else {
@@ -47,6 +49,7 @@
                                 echo "nocpe(); return false; ";
                             }
                             echo "' action='".route('verpar')."' method='POST' role='form'>".csrf_field()."<input type='hidden' id='id' name='id' value='".$obj[$i]->_id."'><input type='hidden' id='ser' name='ser' value='".$obj[$i]->_deviceId->_SerialNumber."'><button type='submit' class='btn btn-outline-primary'>Ver Parametros</button></form></td>";
+                            if($id!=5) {
                             echo "<td><form onsubmit='";
                             if ($lidate < $now2) {
                                 echo "nocpe(); return false; ";
@@ -55,6 +58,7 @@
                                 echo "noreg(); return false; ";
                             }
                             echo "' action='".route('modpar')."' method='POST' role='form'>".csrf_field()."<input type='hidden' id='id' name='id' value='".$obj[$i]->_id."'><input type='hidden' id='ser' name='ser' value='".$obj[$i]->_deviceId->_SerialNumber."'><button type='submit' class='btn btn-outline-primary'>Modificar Parametros</button></form></td>";
+                            }
                             echo "</tr>";
                             $u=0;
                         }

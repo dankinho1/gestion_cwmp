@@ -99,7 +99,7 @@
                                 </form>
                             </td>
                                 <td>
-                                    <form action='{{ route('factoryreset') }}' method='POST' role='form'>
+                                    <form onsubmit="return confirm('ADVERTENCIA: Reiniciar el equipo puede llevar a fallas de conexion con el servidor. Esta seguro de que quiere reiniciar?');" action='{{ route('factoryreset') }}' method='POST' role='form'>
                                         {{ csrf_field() }}
                                         <input type='hidden' id='id' name='id' value='{{ $obj[$i]->_id }}'>
                                         <button type='submit' class='btn btn-outline-primary'>Reseteo de Fabrica</button>
@@ -114,7 +114,15 @@
                                 </form>
                             </td>
                                 <td>
-                                    <form action='{{ route('ping') }}' method='POST' role='form'>
+                                    <?php
+                                        if (isset($obj[$i]->InternetGatewayDevice->IPPingDiagnostics)||isset($obj[$i]->Device->IP->Diagnostics)) {
+                                            echo "<form onsubmit='return true;";
+                                        }
+                                        else {
+                                            echo "<form onsubmit='noping(); return false;'";
+                                        }
+                                    echo "' action='".route('ping')."' method='POST' role='form'>";
+                                    ?>
                                         {{ csrf_field() }}
                                         <input type='hidden' id='idd' name='idd' value='{{ $obj[$i]->_id }}'>
                                         <input type='hidden' id='se' name='se' value='{{ $obj[$i]->_deviceId->_SerialNumber }}'>
@@ -353,4 +361,10 @@
         </div>
     </div>
 </div>
+
+    <script>
+        function noping() {
+            alert('CPE no tiene esta funcion disponible');
+        }
+    </script>
 @endsection

@@ -160,22 +160,28 @@ class ChartController extends Controller
             for($j=0;$j<$objl;$j++) {
                 if ($u[$i]->serial == $obj[$j]->_deviceId->_SerialNumber) {
                     $lv[$i] = $obj[$j]->_lastInform;
+                    $lvs[$i] = $obj[$j]->_deviceId->_SerialNumber;
                 }
             }
         }
 
+        $ij=0;
         for($k=0;$k<$co;$k++) {
             $inf[$k] = 0;
             for($j=0;$j<$l;$j++) {
                 if ($nodo[$k]==$u[$j]->nodo) {
                         $lidate = date('Y-m-d H:i:s', strtotime($lv[$j]));
-                        $now2 = \Carbon\Carbon::now()->subMinutes(10);
+                        $now2 = \Carbon\Carbon::now()->subMinutes(5);
                         if ($lidate < $now2) {
                             $inf[$k] = $inf[$k] + 1;
+                            $infn[$ij] = $u[$j]->nodo;
+                            $infs[$ij] = $lvs[$j];
+                            $ij++;
                         }
                 }
             }
         }
+        $infsc = count($infs);
 
 // Generate random colours for the groups
         for ($i=0; $i<=$co; $i++) {
@@ -186,6 +192,7 @@ class ChartController extends Controller
         $chart->labels = ($nodo);
         $chart->dataset = ($inf);
         $chart->colours = $colours;
-        return view('charts.nodos', compact('chart'));
+
+        return view('charts.nodos', compact('chart'), ['infs' => $infs, 'infsc' => $infsc, 'infn' => $infn]);
     }
 }

@@ -17,8 +17,8 @@ class VerController extends Controller
 
     public function index(Request $request)
     {
-        $r = Auth::user()->roles_id;
-        echo $r;
+        $rid = Auth::user()->roles_id;
+        echo $rid;
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "http://".$this->mainip.":7557/devices/");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -31,7 +31,7 @@ class VerController extends Controller
         $l = count($obj);
         $dcpe = ModemCPE::all();
         //    echo "<br>".$obj->InternetGatewayDevice->DeviceInfo->ModelName->_value;
-        return view('cpe.ver', ['id' => $r, 'obj' => $obj, 'l' => $l, 'dcpe' => $dcpe]);
+        return view('cpe.ver', ['id' => $rid, 'obj' => $obj, 'l' => $l, 'dcpe' => $dcpe]);
     }
 
     public function buscar(Request $request)

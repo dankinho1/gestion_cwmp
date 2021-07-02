@@ -11,6 +11,21 @@
                     <div class="col-lg-10">
                         <canvas id="userChart" class="rounded shadow"></canvas>
                     </div>
+                    <br>
+                    <div class="col-lg-10">
+                        Lista de CPEs inactivos<br><br>
+                        @for($i=0;$i<$infsc;$i++)
+                            <div class="col-lg-10">
+                                En nodo {{ $infn[$i] }}:<br>
+                                @for($j=0;$j<$infsc;$j++)
+                                    @if($infn[$i]==$infn[$j])
+                                        {{ $infs[$j] }}<br>
+                                    @endif
+                                @endfor
+                                <br>
+                            </div>
+                        @endfor
+                    </div>
                 </div>
             </div>
         </div>
