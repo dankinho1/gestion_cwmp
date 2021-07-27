@@ -1,29 +1,34 @@
 @extends('cpe.par')
 
 @section('tr')
-    CPE ID: {{ $obj[0]->_id }}<br>
-    Serial: {{ $obj[0]->InternetGatewayDevice->DeviceInfo->SerialNumber->_value }}<br>
-    Version del Hardware: {{ $obj[0]->InternetGatewayDevice->DeviceInfo->HardwareVersion->_value }}<br>
-    Version del Software: {{ $obj[0]->InternetGatewayDevice->DeviceInfo->SoftwareVersion->_value }} {{ $obj[0]->InternetGatewayDevice->DeviceInfo->AdditionalSoftwareVersion->_value }}<br>
-    Descripcion del CPE: {{ $obj[0]->InternetGatewayDevice->DeviceInfo->Description->_value }}<br>
-    Fabricante: {{ $obj[0]->InternetGatewayDevice->DeviceInfo->Manufacturer->_value }}<br>
-    OUI del Fabricante: {{ $obj[0]->InternetGatewayDevice->DeviceInfo->ManufacturerOUI->_value }}<br>
-    Modelo: {{ $obj[0]->InternetGatewayDevice->DeviceInfo->ModelName->_value }}<br>
-    Firmware: {{ $obj[0]->InternetGatewayDevice->DeviceInfo->ModemFirmwareVersion->_value }}<br>
-    Clase: {{ $obj[0]->InternetGatewayDevice->DeviceInfo->ProductClass->_value }}<br>
-    Tiempo desde el ultimo reinicio: {{ $obj[0]->InternetGatewayDevice->DeviceInfo->UpTime->_value }} s<br>
+    <h1>Datos Generales</h1>
+    <div class="card">
+        <b>CPE ID:</b> {{ $obj[0]->_id }}<br>
+        <b>Serial:</b> {{ $obj[0]->InternetGatewayDevice->DeviceInfo->SerialNumber->_value }}<br>
+        <b>Version del Hardware:</b> {{ $obj[0]->InternetGatewayDevice->DeviceInfo->HardwareVersion->_value }}<br>
+        <b>Version del Software:</b> {{ $obj[0]->InternetGatewayDevice->DeviceInfo->SoftwareVersion->_value }} {{ $obj[0]->InternetGatewayDevice->DeviceInfo->AdditionalSoftwareVersion->_value }}<br>
+        <b>Descripcion del CPE:</b> {{ $obj[0]->InternetGatewayDevice->DeviceInfo->Description->_value }}<br>
+        <b>Fabricante:</b> {{ $obj[0]->InternetGatewayDevice->DeviceInfo->Manufacturer->_value }}<br>
+        <b>OUI del Fabricante:</b> {{ $obj[0]->InternetGatewayDevice->DeviceInfo->ManufacturerOUI->_value }}<br>
+        <b>Modelo:</b> {{ $obj[0]->InternetGatewayDevice->DeviceInfo->ModelName->_value }}<br>
+        <b>Firmware:</b> {{ $obj[0]->InternetGatewayDevice->DeviceInfo->ModemFirmwareVersion->_value }}<br>
+        <b>Clase:</b> {{ $obj[0]->InternetGatewayDevice->DeviceInfo->ProductClass->_value }}<br>
+    </div>
     <br>
+    <div class="card">
     <?php
     for($i=0; $i<$eel;$i++) {
     ?>
-    Red WAN: {{ $obj[0]->InternetGatewayDevice->WANDevice->{$ee[$i]}->WANConnectionDevice->{$ee2[$i]}->WANPPPConnection->{$ee3[$i]}->Name->_value }}<br>
-    Estado: @if($obj[0]->InternetGatewayDevice->WANDevice->{$ee[$i]}->WANConnectionDevice->{$ee2[$i]}->WANPPPConnection->{$ee3[$i]}->ConnectionStatus->_value=='Connected') Conectado
+        <b>Red WAN:</b> {{ $obj[0]->InternetGatewayDevice->WANDevice->{$ee[$i]}->WANConnectionDevice->{$ee2[$i]}->WANPPPConnection->{$ee3[$i]}->Name->_value }}<br>
+        <b>Estado:</b> @if($obj[0]->InternetGatewayDevice->WANDevice->{$ee[$i]}->WANConnectionDevice->{$ee2[$i]}->WANPPPConnection->{$ee3[$i]}->ConnectionStatus->_value=='Connected') Conectado
     @endif<br>
     <?php
     }
     ?>
+    </div>
     <br>
     <h2>Wi-Fi</h2>
+    <div class="card">
     <form action='{{ route('parametros.store') }}' method='POST' role='form'>
         {{ csrf_field() }}
         SSID: <input type="text" id="ssid" name="ssid" value="{{ $obj[0]->InternetGatewayDevice->LANDevice->{1}->WLANConfiguration->{1}->SSID->_value }}"><br>
@@ -51,14 +56,16 @@
         <input type='hidden' id='id' name='id' value='{{ $obj[0]->_id }}'>
         <button type='submit' class='btn btn-outline-primary'>Cambiar</button>
     </form>
+    </div>
 
     <h2>Conexiones WAN</h2>
+    <div class="card">
     <?php
     if(isset($eel)) {
     for($i=0; $i<$eel;$i++) {
     ?>
     <h3>Conexion PPP {{ $ee3[$i] }}</h3>
-    Red WAN PPPoE {{ $ee3[$i] }}: {{ $obj[0]->InternetGatewayDevice->WANDevice->{$ee[$i]}->WANConnectionDevice->{$ee2[$i]}->WANPPPConnection->{$ee3[$i]}->Name->_value }}<br>
+        <b>Red WAN PPPoE {{ $ee3[$i] }}:</b> {{ $obj[0]->InternetGatewayDevice->WANDevice->{$ee[$i]}->WANConnectionDevice->{$ee2[$i]}->WANPPPConnection->{$ee3[$i]}->Name->_value }}<br><br>
 
     <form action='{{ route('parametros.store') }}' method='POST' role='form'>
         {{ csrf_field() }}
@@ -104,17 +111,19 @@
         <button type='submit' class='btn btn-outline-primary'>Cambiar</button>
     </form>
 
-    Estado: @if($obj[0]->InternetGatewayDevice->WANDevice->{$ee[$i]}->WANConnectionDevice->{$ee2[$i]}->WANPPPConnection->{$ee3[$i]}->ConnectionStatus->_value=='Connected') En uso
+        <b>Estado:</b> @if($obj[0]->InternetGatewayDevice->WANDevice->{$ee[$i]}->WANConnectionDevice->{$ee2[$i]}->WANPPPConnection->{$ee3[$i]}->ConnectionStatus->_value=='Connected') En uso
     @else Desconectado
     @endif<br><br>
     <?php
     }
     }
+    echo "</div><br>";
+    echo "<div class='card'>";
     if(isset($eeipl)) {
     for($i=0; $i<$eeipl;$i++) {
     ?>
     <h3>Conexion IP {{ $i+1 }}</h3>
-    Red WAN IP {{ $eeip3[$i] }}: {{ $obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANConnectionDevice->{$eeip2[$i]}->WANIPConnection->{$eeip3[$i]}->Name->_value }}<br>
+        <b>Red WAN IP {{ $eeip3[$i] }}:</b> {{ $obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANConnectionDevice->{$eeip2[$i]}->WANIPConnection->{$eeip3[$i]}->Name->_value }}<br><br>
 
     <form action='{{ route('parametros.store') }}' method='POST' role='form'>
         {{ csrf_field() }}
@@ -149,10 +158,10 @@
         <button type='submit' class='btn btn-outline-primary'>Cambiar</button>
     </form>
 
-    NAT: @if($obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANConnectionDevice->{$eeip2[$i]}->WANIPConnection->{$eeip3[$i]}->NATEnabled->_value=='1') Habilitado
+        <b>NAT:</b> @if($obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANConnectionDevice->{$eeip2[$i]}->WANIPConnection->{$eeip3[$i]}->NATEnabled->_value=='1') Habilitado
     @else Desconectado
     @endif<br>
-    Estado: @if($obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANConnectionDevice->{$eeip2[$i]}->WANIPConnection->{$eeip3[$i]}->ConnectionStatus->_value=='Connected') En uso
+        <b>Estado:</b> @if($obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANConnectionDevice->{$eeip2[$i]}->WANIPConnection->{$eeip3[$i]}->ConnectionStatus->_value=='Connected') En uso
     @else Desconectado
     @endif<br>
     <br>
@@ -161,4 +170,5 @@
     }
     }
     ?>
+    </div>
 @endsection

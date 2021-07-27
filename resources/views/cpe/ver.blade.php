@@ -5,6 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-12">
                 <div id="dom-target">
+                    <div class="card">
 
                     <table data-toggle="table">
                         <thead>
@@ -65,8 +66,10 @@
                         ?>
                         </tbody>
                     </table>
+                    </div>
                 </div>
             </div>
+            <br>
             <a type="button" href="{{ route('home') }}" class="btn btn-outline-primary">Volver</a>
             <a type="button" href="{{ route('home') }}" class="btn btn-outline-primary">Pagina Principal</a><br>
         </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ArchivosController extends Controller
 {
@@ -75,4 +76,20 @@ class ArchivosController extends Controller
 
         return redirect()->route('home');
     }
+
+    public function subira(Request $request)
+    {
+        $name = $_FILES['file']['name'];
+        $path = $request->file('file')->storeAs('/root',$name);
+
+        return $name;
+    }
+
+    public function descargara()
+    {
+        $url = Storage::url('app/root/pr.bin');
+
+        return Storage::download('storage\app\root\pr.bin');
+    }
+
 }

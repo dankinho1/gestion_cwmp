@@ -158,6 +158,7 @@ class ReglaController extends Controller
         $name = $request->name;
         $event = $request->event;
         $precondition = $request->precondition;
+        $precondition = str_replace("\"","\\\"",$precondition);
         $regla = $request->regla;
         $post = '{"weight": 0, "channel":"'.$name.'", "precondition": "'.$precondition.'", "events": {"'.$event.'": true}, "configurations": [{"type": "provision", "name": "'.$regla.'", "args": null}]}';
         $ch = curl_init();
@@ -210,8 +211,9 @@ class ReglaController extends Controller
         $name = $request->name;
         $event = $request->event;
         $precondition = $request->precondition;
+        $precondition = str_replace("\"","\\\"",$precondition);
         $regla = $request->regla;
-        $post = '{"weight": 0, "channel":"'.$name.'", "precondition": "'.$precondition.'", "events": {"'.$event.'": true}, "configurations": [{"type": "provision", "name": "'.$regla.'", "args": null}]}';
+        $post = '{"channel":"'.$name.'", "precondition": "'.$precondition.'", "events": {"'.$event.'": true}, "weight": 0, "configurations": [{"type": "provision", "name": "'.$regla.'", "args": null}]}';
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "http://".$this->mainip.":7557/presets/".$name);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

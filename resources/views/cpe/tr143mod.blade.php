@@ -1,7 +1,8 @@
 @extends('cpe.par')
 
 @section('tr')
-    <h2>Datos Tecnicos</h2>
+    <h1>Datos Generales</h1>
+    <div class="card">
     CPE ID: {{ $obj[0]->_id }}<br>
     Serial: {{ $obj[0]->Device->DeviceInfo->SerialNumber->_value }}<br>
     Version del Hardware: {{ $obj[0]->Device->DeviceInfo->HardwareVersion->_value }}<br>
@@ -11,9 +12,11 @@
     OUI del Fabricante: {{ $obj[0]->Device->DeviceInfo->ManufacturerOUI->_value }}<br>
     Modelo: {{ $obj[0]->Device->DeviceInfo->ModelName->_value }}<br>
     Clase: {{ $obj[0]->Device->DeviceInfo->ProductClass->_value }}<br>
-    Tiempo desde el ultimo reinicio: {{ $obj[0]->Device->DeviceInfo->UpTime->_value }} s<br>
+    </div>
     <br>
     <br>
+    <h1>Conexiones WAN</h1>
+    <div class="card">
     <h2>Interfaces</h2>
         <?php
         for($i=0;$i<$eel2;$i++) {
@@ -42,7 +45,9 @@
         <?php
         }
         ?>
+    </div>
         <br>
+    <div class="card">
         <h2>DHCP</h2>
     <form action='{{ route('parametros.store') }}' method='POST' role='form'>
         {{ csrf_field() }}
@@ -51,4 +56,5 @@
         <input type='hidden' id='id' name='id' value='{{ $obj[0]->_id }}'>
         <button type='submit' class='btn btn-outline-primary'>Cambiar</button>
     </form>
+    </div>
 @endsection

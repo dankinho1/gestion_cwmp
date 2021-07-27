@@ -17,6 +17,31 @@
         echo $f[0];
         }
     ?>
+
+    <!--<img alt="Modem" src="download.jpg" />-->
+    <style>
+        .pinterest
+        {
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        .pinterest:hover
+        {
+            box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+            margin-top: -5px;
+            -webkit-transition: all 0.3s ease-in-out;
+            -moz-transition: all 0.3s ease-in-out;
+            -o-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .img-responsive
+        {
+            margin: 0 auto;
+        }
+    </style>
+
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-lg-12">
@@ -53,20 +78,58 @@
                 </ul>
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="cpe" role="tabpanel" aria-labelledby="cpe-tab">
-                        <br><br><br><br><br>
+                        <br><br>
                         <center>
-                        <a type="button" href="{{ route('vercpe') }}" class="btn btn-outline-primary">Ver lista de CPE</a>
-                        <a type="button" href="{{ route('buscpe') }}" class="btn btn-outline-primary">Buscar CPEs Registrados</a><br>
-                        <br><br><br><br><br><br>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-3 col-sm-6 col-xs-6">
+                                    <div class="pinterest">
+                                        <!--<img class="img-responsive" alt="Pinterest Template" src="http://www.prepbootstrap.com/Content/images/template/social/social3.jpg" />-->
+                                        <br />
+                                        <h4><a href="{{ route('vercpe') }}">Ver Lista de CPE</a></h4>
+                                        <p class="text-justify">Esta opcion sirve para ver la lista completa de CPEs en la red. En esta seccion se podran encontrar CPEs que no esten registrados.</p>
+                                    </div>
+                                    <br />
+                                </div>
+                                <div class="col-md-3 col-sm-6 col-xs-6">
+                                    <div class="pinterest">
+                                        <!--<img class="img-responsive" alt="Modem" src="img/270516.png" width="100" height="100" />-->
+                                        <br />
+                                        <h4><a href="{{ route('buscpe') }}">Buscar CPEs Registrados</a></h4>
+                                        <p class="text-justify">Esta opcion sirve para buscar CPEs por contrato, telefono o numero Serial. Los CPEs encontrados seran solo aquellos que ya estan registrados.</p>
+                                    </div>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
                         </center>
                     </div>
                     @if($id!="2")
                     <div class="tab-pane fade" id="estadistica" role="tabpanel" aria-labelledby="estadistica-tab">
-                        <br><br><br><br><br>
+                        <br><br>
                         <center>
-                        <a type="button" href="{{ route('charts') }}" class="btn btn-outline-primary">CPEs activos e inactivos</a>
-                            <a type="button" href="{{ route('chnodos') }}" class="btn btn-outline-primary">CPEs con falla por nodos</a>
-                        <br><br><br><br><br><br>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-6 col-xs-6">
+                                        <div class="pinterest">
+                                            <!--<img class="img-responsive" alt="Pinterest Template" src="http://www.prepbootstrap.com/Content/images/template/social/social3.jpg" />-->
+                                            <br />
+                                            <h4><a href="{{ route('charts') }}">CPEs activos e inactivos</a></h4>
+                                            <p class="text-justify">Cuadro estadistico que muestra la cantidad de nodos activos e inactivos en toda la red. Este grafico muestra los CPEs no registrados tambien.</p>
+                                        </div>
+                                        <br />
+                                    </div>
+                                    <div class="col-md-3 col-sm-6 col-xs-6">
+                                        <div class="pinterest">
+                                            <!--<img class="img-responsive" alt="Modem" src="img/270516.png" width="100" height="100" />-->
+                                            <br />
+                                            <h4><a href="{{ route('chnodos') }}">CPEs con falla por nodos</a></h4>
+                                            <p class="text-justify">Cuadro estadistico que muestra el numero de CPEs inactivos por zona. Solo se muestran los CPEs registrados a un contrato.</p>
+                                        </div>
+                                        <br />
+                                    </div>
+                                </div>
+                            </div>
                         </center>
                     </div>
                     @endif
