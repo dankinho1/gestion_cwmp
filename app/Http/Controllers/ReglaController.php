@@ -48,7 +48,7 @@ class ReglaController extends Controller
         curl_close($ch);
         $objpost = json_decode($output);
 
-        return redirect()->route('home');
+        return redirect()->route('home2');
     }
 
     /**
@@ -106,7 +106,7 @@ class ReglaController extends Controller
         curl_close($ch);
         $objpost = json_decode($output);
 
-        return redirect()->route('home');
+        return redirect()->route('home2');
 
 
     }
@@ -131,7 +131,7 @@ class ReglaController extends Controller
         $r = substr($r,2);
         $objpost = json_decode($output);
 
-        return redirect()->route('home');
+        return redirect()->route('home2');
     }
 
     public function cregla()
@@ -170,7 +170,7 @@ class ReglaController extends Controller
         curl_close($ch);
         $objpost = json_decode($output);
 
-        return redirect()->route('home');
+        return redirect()->route('home2');
     }
 
     public function earegla($id)
@@ -202,7 +202,7 @@ class ReglaController extends Controller
         $r = substr($r,2);
         $objpost = json_decode($output);
 
-        return redirect()->route('home');
+        return redirect()->route('home2');
     }
 
     public function maregla(Request $request)
@@ -223,6 +223,6 @@ class ReglaController extends Controller
         curl_close($ch);
         $objpost = json_decode($output);
 
-        return redirect()->route('home');
+        return redirect()->route('home2');
     }
 }

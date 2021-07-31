@@ -56,7 +56,7 @@ class ArchivosController extends Controller
         $r = substr($r,2);
         $objpost = json_decode($output);
 
-        return redirect()->route('home');
+        return redirect()->route('home2');
     }
 
     public function borraractu(Request $request)
@@ -74,7 +74,7 @@ class ArchivosController extends Controller
         $r = substr($r,2);
         $objpost = json_decode($output);
 
-        return redirect()->route('home');
+        return redirect()->route('home2');
     }
 
     public function subira(Request $request)

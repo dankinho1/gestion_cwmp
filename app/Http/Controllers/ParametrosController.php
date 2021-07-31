@@ -217,7 +217,7 @@ class ParametrosController extends Controller
             $objpost = json_decode($output);
         }
 
-        return redirect()->route('home');
+        return redirect()->route('home2');
     }
 
     /**

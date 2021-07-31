@@ -37,7 +37,7 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="{{ route('home') }}">
+                    <a class="nav-link" href="{{ route('home2') }}">
                         Principal
                         <span class="sr-only">(current)</span>
                     </a>
@@ -56,7 +56,7 @@
             <div class="col-lg-6">
                 <h1 class="mt-5">COTEL RL</h1>
                 <p>Sistema CWMP de monitoreo y gestion de equipos CPE de lado cliente.</p>
-                <a class="btn btn-primary btn-lg active" href="{{ route('home') }}" role="button" aria-pressed="true">
+                <a class="btn btn-primary btn-lg active" href="{{ route('home2') }}" role="button" aria-pressed="true">
                     Entrar
                     <span class="sr-only">(current)</span>
                 </a>

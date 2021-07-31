@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('home3')
 
-@section('content')
+@section('graph1')
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
 <div class="container">
@@ -14,11 +14,8 @@
             </div>
         </div>
     </div>
-    <br><br><center><a type="button" href="{{ route('home') }}" class="btn btn-outline-primary">Volver</a>
-        <a type="button" href="{{ route('home') }}" class="btn btn-outline-primary">Pagina Principal</a><br>
-    </center>
+    <br><br>
 </div>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
@@ -73,4 +70,67 @@
         }
     });
 </script>
+@endsection
+
+@section('usu2')
+    <div class="table-responsive">
+        <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+            <thead>
+            <tr>
+                <th class="text-center">#</th>
+                <th>Usuario</th>
+                <th class="text-center">Correo</th>
+                <th class="text-center">Nivel de Usuario</th>
+                <th class="text-center">Accciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            for ($i=0; $i<$lusu; $i++) {
+                if(isset($usu[$i]->id)){
+                    ?>
+            <tr>
+                <td class="text-center text-muted">#{{ $usu[$i]->id }}</td>
+                <td>
+                    <div class="widget-content p-0">
+                        <div class="widget-content-wrapper">
+                            <div class="widget-content-left mr-3">
+                                <div class="widget-content-left">
+                                    <img width="40" class="rounded-circle" src="{{ url('/js/assets/images/avatars/unkn.jpg') }}" alt="">
+                                </div>
+                            </div>
+                            <div class="widget-content-left flex2">
+                                <div class="widget-heading">{{ $usu[$i]->name }}</div>
+                                <div class="widget-subheading opacity-7">Web Developer</div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td class="text-center">{{ $usu[$i]->email }}</td>
+                <td class="text-center">
+                    <div class="badge badge-warning">{{ $usu[$i]->roles->name }}</div>
+                </td>
+                <td class="text-center">
+                    <form action='{{ route('users.edit',$usu[$i]->id) }}' method='GET' role='form'>
+                        {{ csrf_field() }}
+                        <input type='hidden' id='id' name='id' value='{{ $usu[$i]->id }}'>
+                    <button type="submit" id="PopoverCustomT-1" class="btn btn-primary btn-sm">Editar</button>
+                    </form>
+                </td>
+                <td class="text-center">
+                    <form onsubmit="return confirm('Quiere eliminar el usuario?');" action='{{ route('users.destroy',$usu[$i]->id) }}' method='POST' role='form'>
+                        {{ csrf_field() }}
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type='hidden' id='id' name='id' value='{{ $usu[$i]->id }}'>
+                    <button type="submit" id="PopoverCustomT-1" class="btn btn-primary btn-sm">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            <?php
+            }
+            }
+            ?>
+            </tbody>
+        </table>
+    </div>
 @endsection

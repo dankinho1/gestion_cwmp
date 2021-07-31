@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('home2')
 
-@section('content')
+@section('content2')
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
     <div class="container">
@@ -29,8 +29,7 @@
                 </div>
             </div>
         </div>
-        <br><br><center><a type="button" href="{{ route('home') }}" class="btn btn-outline-primary">Volver</a>
-            <a type="button" href="{{ route('home') }}" class="btn btn-outline-primary">Pagina Principal</a><br>
+        <br><br><center><br>
         </center>
     </div>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

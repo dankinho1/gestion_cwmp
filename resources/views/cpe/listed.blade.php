@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('home2')
 
-@section('content')
+@section('content2')
 <table>
     <thead>
     <tr>
@@ -16,7 +16,7 @@
     for ($i=0; $i<$l; $i++) {
     ?>
     <tr>
-        <form action='{{ route('regcpe.update',$i+1) }}' method='POST'>
+        <form action='{{ route('regcpe.update',$obj[$i]->id) }}' method='POST'>
             {{ csrf_field() }}
             <input type="hidden" name="_method" value="PUT">
             <td>{{ $obj[$i]->serial }}</td>

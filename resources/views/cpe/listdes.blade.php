@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('home2')
 
-@section('content')
+@section('content2')
     <table>
         <thead>
         <tr>

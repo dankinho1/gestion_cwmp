@@ -51,7 +51,7 @@ class AdminUsersController extends Controller
         $newu->roles_id = $nivel;
         $newu->save();
 
-        return redirect()->route('home');
+        return redirect()->route('home2');
     }
 
     /**
@@ -94,7 +94,7 @@ class AdminUsersController extends Controller
         $user->password = Hash::make($request->password);
         $user->save();
 
-        return redirect()->route('home');
+        return redirect()->route('home2');
     }
 
     /**
@@ -108,6 +108,6 @@ class AdminUsersController extends Controller
         //
         User::destroy($id);
 
-        return redirect()->route('home');
+        return redirect()->route('home2');
     }
 }

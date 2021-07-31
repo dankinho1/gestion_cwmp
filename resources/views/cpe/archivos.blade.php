@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('home2')
 
-@section('content')
+@section('content2')
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-lg-12">

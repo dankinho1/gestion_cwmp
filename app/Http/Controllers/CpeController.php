@@ -75,7 +75,7 @@ class CpeController extends Controller
             $modemcpe->save();
         }
 
-        return redirect()->route('home');
+        return redirect()->route('home2');
     }
 
     /**
@@ -116,7 +116,7 @@ class CpeController extends Controller
         $cpe->telefono = $request->telf;
         $cpe->save();
 
-        return redirect()->route('home');
+        return redirect()->route('home2');
     }
 
     /**
@@ -130,7 +130,7 @@ class CpeController extends Controller
         //
         ModemCPE::destroy($id);
 
-        return redirect()->route('home');
+        return redirect()->route('home2');
     }
 
     public function listed()

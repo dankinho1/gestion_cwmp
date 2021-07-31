@@ -100,6 +100,7 @@
                                     </div>
                                     <br />
                                 </div>
+                                <a href="{{ route('charts') }}">Home2</a>
                             </div>
                         </div>
                         </center>

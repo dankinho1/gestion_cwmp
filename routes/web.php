@@ -25,6 +25,10 @@ Route::get('/reg', function () {
 })->name('reg');
 Route::group(['middleware' => 'auth'], function(){
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home2', 'App\Http\Controllers\HomeController@home2')->name('home2');
+    Route::get('/gestion', 'App\Http\Controllers\HomeController@gestion')->name('gestion');
+    Route::get('/principalregla', 'App\Http\Controllers\HomeController@principalregla')->name('principalregla');
+    Route::get('/listprin', 'App\Http\Controllers\HomeController@listprin')->name('listprin');
 Route::get('/vercpe', 'App\Http\Controllers\VerController@index')->name('vercpe');
 Route::get('/buscpe', 'App\Http\Controllers\VerController@buscar')->name('buscpe');
 Route::post('/archivo', 'App\Http\Controllers\ArchivosController@index')->name('archivo');
