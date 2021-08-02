@@ -273,7 +273,7 @@ class ParametrosController extends Controller
         $id = $request->id;
         $id = str_replace("%","%25",$id);
         $se = $request->ser;
-        $r = Auth::user()->roles_id;
+        $r2 = Auth::user()->roles_id;
 
 
         $post = '{"name": "refreshObject", "objectName": "InternetGatewayDevice.DeviceInfo"}';
@@ -462,7 +462,7 @@ class ParametrosController extends Controller
         if(!$obj) {
             echo "OBJ2 EX";
 
-            return view('cpe.tr143', ['id' => $r, 'obj' => $obj2, 'l' => $l2]);
+            return view('cpe.tr143', ['id' => $r2, 'obj' => $obj2, 'l' => $l2]);
         }
         if(!$obj2) {
             echo "OBJ1 EX";
@@ -516,7 +516,7 @@ class ParametrosController extends Controller
                 $hov = 0;
             }
 
-            return view('cpe.tr098', ['id' => $r, 'obj' => $obj, 'l' => $l, 'ho' => $ho, 'hov' => $hov, 'lho' => $lho, 'ee' => $ee, 'ee2' => $ee2, 'ee3' => $ee3, 'eel' => $eel, 'eeip' => $eeip, 'eeip2' => $eeip2, 'eeip3' => $eeip3, 'eeipl' => $eeipl]);
+            return view('cpe.tr098', ['id' => $r2, 'obj' => $obj, 'l' => $l, 'ho' => $ho, 'hov' => $hov, 'lho' => $lho, 'ee' => $ee, 'ee2' => $ee2, 'ee3' => $ee3, 'eel' => $eel, 'eeip' => $eeip, 'eeip2' => $eeip2, 'eeip3' => $eeip3, 'eeipl' => $eeipl]);
         }
     }
 
@@ -526,7 +526,7 @@ class ParametrosController extends Controller
         $id = $request->id;
         $id = str_replace("%","%25",$id);
         $se = $request->ser;
-        $r = Auth::user()->roles_id;
+        $r2 = Auth::user()->roles_id;
         echo $id;
 
         $post = '{"name": "refreshObject", "objectName": "InternetGatewayDevice.DeviceInfo"}';
@@ -614,7 +614,7 @@ class ParametrosController extends Controller
             if($obj2 && $ee) {
                 $eel2 = count($ee);
             } else $eel2=0;
-            return view('cpe.tr143mod', ['id' => $r, 'obj' => $obj2, 'l' => $l2, 'ee' => $ee, 'ee2' => $ee2, 'eel2' => $eel2]);
+            return view('cpe.tr143mod', ['id' => $r2, 'obj' => $obj2, 'l' => $l2, 'ee' => $ee, 'ee2' => $ee2, 'eel2' => $eel2]);
         }
         if(!$obj2) {
             echo "OBJ1 EX";
@@ -770,7 +770,7 @@ class ParametrosController extends Controller
                 $eew = 0;
                 $eew2 = 0;
             }
-            return view('cpe.tr098mod', ['id' => $r, 'obj' => $obj, 'l' => $l, 'ee' => $ee, 'ee2' => $ee2, 'ee3' => $ee3, 'eel' => $eel, 'eeip' => $eeip, 'eeip2' => $eeip2, 'eeip3' => $eeip3, 'eeipl' => $eeipl, 'eew' => $eew, 'eew2' => $eew2, 'eewl' => $eewl]);
+            return view('cpe.tr098mod', ['id' => $r2, 'obj' => $obj, 'l' => $l, 'ee' => $ee, 'ee2' => $ee2, 'ee3' => $ee3, 'eel' => $eel, 'eeip' => $eeip, 'eeip2' => $eeip2, 'eeip3' => $eeip3, 'eeipl' => $eeipl, 'eew' => $eew, 'eew2' => $eew2, 'eewl' => $eewl]);
         }
     }
 

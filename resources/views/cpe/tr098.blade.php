@@ -87,13 +87,25 @@ if(isset($eel)) {
     <h3>Datos Tecnicos ADSL</h3>
             <b>Estado conexion fisica:</b> {{ $obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANCommonInterfaceConfig->PhysicalLinkStatus->_value }}<br>
             <b>Tipo de Conexion:</b> {{ $obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANCommonInterfaceConfig->WANAccessType->_value }}<br>
+            @if(isset($obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANEthernetInterfaceConfig->MACAddress->_value))
             <b>Direccion MAC:</b> {{ $obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANEthernetInterfaceConfig->MACAddress->_value }}<br>
+            @endif
+            @if(isset($obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANDSLInterfaceConfig->ModulationType->_value))
             <b>Tipo de Modulacion:</b> {{ $obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANDSLInterfaceConfig->ModulationType->_value }}<br>
+            @endif
+            @if(isset($obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANDSLInterfaceConfig->DownstreamCurrRate->_value))
             <b>Velocidad Bajada:</b> {{ $obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANDSLInterfaceConfig->DownstreamCurrRate->_value }}<br>
+            @endif
+            @if(isset($obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANDSLInterfaceConfig->UpstreamCurrRate->_value))
             <b>Velocidad Subida:</b> {{ $obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANDSLInterfaceConfig->UpstreamCurrRate->_value }}<br>
+            @endif
 
+            @if(isset($obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANDSLInterfaceConfig->DownstreamAttenuation->_value))
             <b>Atenuacion Bajada:</b> {{ $obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANDSLInterfaceConfig->DownstreamAttenuation->_value }}<br>
+            @endif
+            @if(isset($obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANDSLInterfaceConfig->UpstreamAttenuation->_value))
             <b>Atenuacion Subida:</b> {{ $obj[0]->InternetGatewayDevice->WANDevice->{$eeip[$i]}->WANDSLInterfaceConfig->UpstreamAttenuation->_value }}<br>
+            @endif
     <br>
         </div>
     </div><br>

@@ -124,7 +124,7 @@ class HomeController extends Controller
         $lmod = count($mod);
         echo count($mod);
 
-        // Get users grouped by age
+        // Get cpes grouped by state
         $groups = DB::table('users')
             ->select('roles_id', DB::raw('count(*) as total'))
             ->groupBy('roles_id')
@@ -142,7 +142,7 @@ class HomeController extends Controller
         $inf[1] = 0;
         for($i=0;$i<$objl;$i++) {
             $lidate = date('Y-m-d H:i:s', strtotime($obj[$i]->_lastInform));
-            $now2 = \Carbon\Carbon::now()->subMinutes(10);
+            $now2 = \Carbon\Carbon::now()->subMinutes(6);
             if ($lidate >= $now2) {
                 $inf[0] = $inf[0] + 1;
             } else {

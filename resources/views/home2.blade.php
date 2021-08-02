@@ -424,7 +424,7 @@
                         <li class="app-sidebar__heading">Menus</li>
                         <li>
                             <a href="{{ route('home2') }}" class="mm-active">
-                                <i class="metismenu-icon pe-7s-rocket"></i>
+                                <i class="metismenu-icon pe-7s-home"></i>
                                 Inicio
                             </a>
                         </li>
@@ -437,7 +437,7 @@
                         </li>
                         <li>
                             <a href="{{ route('buscpe') }}">
-                                <i class="metismenu-icon pe-7s-car"></i>
+                                <i class="metismenu-icon pe-7s-search"></i>
                                 Buscar CPEs
                             </a>
                         </li>
@@ -445,7 +445,7 @@
                         <li class="app-sidebar__heading">Cuadros Estadisticos</li>
                         <li>
                             <a href="{{ route('chnodos') }}">
-                                <i class="metismenu-icon pe-7s-display2"></i>
+                                <i class="metismenu-icon pe-7s-graph2"></i>
                                 CPEs inactivos por zonas
                             </a>
                         </li>
@@ -454,7 +454,7 @@
                         <li class="app-sidebar__heading">Gestion</li>
                         <li>
                             <a href="{{ route('gestion') }}">
-                                <i class="metismenu-icon pe-7s-display2"></i>
+                                <i class="metismenu-icon pe-7s-signal"></i>
                                 Menu de Gestion
                             </a>
                         </li>
@@ -484,25 +484,25 @@
                         <li class="app-sidebar__heading">Registros</li>
                         <li>
                             <a href="{{ route('listprin') }}">
-                                <i class="metismenu-icon pe-7s-graph2">
+                                <i class="metismenu-icon pe-7s-note2">
                                 </i>Registro de CPEs
                             </a>
                         </li>
                         <li>
                             <a href="{{ route('listed') }}">
-                                <i class="metismenu-icon pe-7s-graph2">
+                                <i class="metismenu-icon pe-7s-note2">
                                 </i>Editar CPEs registrados
                             </a>
                         </li>
                         <li>
                             <a href="{{ route('listdes') }}">
-                                <i class="metismenu-icon pe-7s-graph2">
+                                <i class="metismenu-icon pe-7s-note2">
                                 </i>Eliminar CPEs registrados
                             </a>
                         </li>
                         <li>
                             <a href="{{ route('users.index') }}">
-                                <i class="metismenu-icon pe-7s-graph2">
+                                <i class="metismenu-icon pe-7s-note2">
                                 </i>Registro de Usuarios
                             </a>
                         </li>

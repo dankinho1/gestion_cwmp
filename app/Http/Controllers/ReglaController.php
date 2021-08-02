@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReglaController extends Controller
 {
@@ -137,11 +138,13 @@ class ReglaController extends Controller
     public function cregla()
     {
 
-        return view('reglas.cregla', ['id' => 0]);
+        $id = Auth::user()->roles_id;
+        return view('reglas.cregla', ['id' => $id]);
     }
 
     public function aregla()
     {
+        $id = Auth::user()->roles_id;
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "http://".$this->mainip.":7557/provisions/");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -149,7 +152,7 @@ class ReglaController extends Controller
         curl_close($ch);
         $obj2 = json_decode($output);
         $l2 = count($obj2);
-        return view('reglas.aregla', ['id' => 0, 'obj2' => $obj2, 'l2' => $l2]);
+        return view('reglas.aregla', ['id' => $id, 'obj2' => $obj2, 'l2' => $l2]);
     }
 
     public function store2(Request $request)

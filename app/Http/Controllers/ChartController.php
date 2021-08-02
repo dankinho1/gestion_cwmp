@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Chart;
 use App\Models\ModemCPE;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -127,6 +128,7 @@ class ChartController extends Controller
     {
         //
         //
+        $id = Auth::user()->roles_id;
         $i=0;
         $link = mysqli_connect( "172.21.22.136", "norah3","Norah123", "soia" )or( "Error :" . mysqli_error( $link ) );
 
@@ -193,6 +195,6 @@ class ChartController extends Controller
         $chart->dataset = ($inf);
         $chart->colours = $colours;
 
-        return view('charts.nodos', compact('chart'), ['infs' => $infs, 'infsc' => $infsc, 'infn' => $infn]);
+        return view('charts.nodos', compact('chart'), ['infs' => $infs, 'infsc' => $infsc, 'infn' => $infn, 'id' => $id]);
     }
 }

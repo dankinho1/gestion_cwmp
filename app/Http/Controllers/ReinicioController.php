@@ -79,7 +79,7 @@ class ReinicioController extends Controller
         $id = $request->idd;
         $id = str_replace("%","%25",$id);
         $se = $request->se;
-        $r = Auth::user()->roles_id;
+        $r2 = Auth::user()->roles_id;
 
 
         /*$post = '{"name": "refreshObject", "objectName": "InternetGatewayDevice.DeviceInfo"}';
@@ -175,11 +175,11 @@ class ReinicioController extends Controller
         }*/
         if(!$obj) {
             echo "OBJ2 EX";
-            return view('cpe.ping', ['id' => $r, 'obj' => $obj2, 'l' => $l2, 'se' => $se]);
+            return view('cpe.ping', ['id' => $r2, 'obj' => $obj2, 'l' => $l2, 'se' => $se]);
         }
         if(!$obj2) {
             echo "OBJ1 EX";
-            return view('cpe.ping', ['id' => $r, 'obj' => $obj, 'l' => $l, 'se' => $se/*, 'ee' => $ee, 'ee2' => $ee2, 'ee3' => $ee3, 'eel' => $eel, 'eeip' => $eeip, 'eeip2' => $eeip2, 'eeip3' => $eeip3, 'eeipl' => $eeipl*/]);
+            return view('cpe.ping', ['id' => $r2, 'obj' => $obj, 'l' => $l, 'se' => $se/*, 'ee' => $ee, 'ee2' => $ee2, 'ee3' => $ee3, 'eel' => $eel, 'eeip' => $eeip, 'eeip2' => $eeip2, 'eeip3' => $eeip3, 'eeipl' => $eeipl*/]);
         }
     }
 
@@ -190,7 +190,7 @@ class ReinicioController extends Controller
         $se = $request->se;
         $tr = $request->tr;
         $id = str_replace("%","%25",$id);
-        $r = Auth::user()->roles_id;
+        $r2 = Auth::user()->roles_id;
         if($tr=="98") {
             $post = '{ "name": "setParameterValues", "parameterValues": [["InternetGatewayDevice.IPPingDiagnostics.Host","172.21.22.136"], ["InternetGatewayDevice.IPPingDiagnostics.NumberOfRepetitions","4"], ["InternetGatewayDevice.IPPingDiagnostics.Timeout","5"], ["InternetGatewayDevice.IPPingDiagnostics.DataBlockSize","32"], ["InternetGatewayDevice.IPPingDiagnostics.DSCP","0"], ["InternetGatewayDevice.IPPingDiagnostics.DiagnosticsState","Requested"]]}';
         } elseif($tr=="181") {

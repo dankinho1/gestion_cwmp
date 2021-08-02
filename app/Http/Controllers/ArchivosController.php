@@ -21,8 +21,8 @@ class ArchivosController extends Controller
         $class = $request->class;
         $class = str_replace(" ","%20",$class);
         $idd = $request->idd;
-        $r = Auth::user()->roles_id;
-        echo $r;
+        $r2 = Auth::user()->roles_id;
+        echo $r2;
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "http://".$this->mainip.":7557/files/?query=%7B%22metadata.productClass%22%3A%22".$class."%22%7D");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -35,7 +35,7 @@ class ArchivosController extends Controller
         if(isset($obj)) $l = count($obj);
         else $l=0;
         //    echo "<br>".$obj->InternetGatewayDevice->DeviceInfo->ModelName->_value;
-        return view('cpe.archivos', ['id' => $r, 'obj' => $obj, 'l' => $l, 'idd' => $idd]);
+        return view('cpe.archivos', ['id' => $r2, 'obj' => $obj, 'l' => $l, 'idd' => $idd]);
     }
 
     public function actu(Request $request)

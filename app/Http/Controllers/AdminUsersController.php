@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AdminUsersController extends Controller
@@ -17,7 +18,8 @@ class AdminUsersController extends Controller
     {
         //
 
-        return view('admin.users.register');
+        $r2 = Auth::user()->roles_id;
+        return view('admin.users.register', ['id' => $r2]);
     }
 
     /**
